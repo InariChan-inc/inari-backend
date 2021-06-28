@@ -1,0 +1,82 @@
+{
+  "name": "inari",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "yarn run tsc",
+    "tsc": "tsc --project tsconfig.compile.json",
+    "tsc:w": "tsc --project tsconfig.json -w",
+    "start": "tsnd --inspect --ignore-watch node_modules --respawn --transpile-only -r tsconfig-paths/register src/index.ts",
+    "start:prod": "cross-env NODE_ENV=production node dist/index.js",
+    "test:lint": "eslint src --ext .ts",
+    "test:lint:fix": "eslint src --ext .ts --fix",
+    "prettier": "prettier '{src,test}/**/*.ts' --write",
+    "typeorm": "tsed typeorm"
+  },
+  "dependencies": {
+    "@tsed/ajv": "^6.59.0",
+    "@tsed/common": "^6.59.0",
+    "@tsed/core": "^6.59.0",
+    "@tsed/di": "^6.59.0",
+    "@tsed/exceptions": "^6.59.0",
+    "@tsed/graphql": "^6.59.0",
+    "@tsed/json-mapper": "^6.59.0",
+    "@tsed/passport": "^6.59.0",
+    "@tsed/platform-express": "^6.59.0",
+    "@tsed/schema": "^6.59.0",
+    "@tsed/typeorm": "^6.59.0",
+    "ajv": "^8.6.0",
+    "apollo-datasource": "^0.9.0",
+    "apollo-datasource-rest": "^0.14.0",
+    "apollo-server-express": "^2.25.2",
+    "body-parser": "^1.19.0",
+    "compression": "^1.7.4",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "graphql": "^15.5.1",
+    "method-override": "^3.0.0",
+    "passport": "^0.4.1",
+    "pg": "^8.6.0",
+    "type-graphql": "^1.1.1",
+    "typeorm": "^0.2.34"
+  },
+  "devDependencies": {
+    "@tsed/cli-plugin-eslint": "3.3.0",
+    "@tsed/cli-plugin-passport": "3.3.0",
+    "@tsed/cli-plugin-typeorm": "3.3.0",
+    "@types/compression": "^1.7.0",
+    "@types/cookie-parser": "^1.4.2",
+    "@types/cors": "^2.8.10",
+    "@types/express": "^4.17.12",
+    "@types/method-override": "^0.0.31",
+    "@types/multer": "^1.4.6",
+    "@types/node": "^15.12.5",
+    "@types/passport": "^1.0.6",
+    "@typescript-eslint/eslint-plugin": "^4.28.0",
+    "@typescript-eslint/parser": "^4.28.0",
+    "apollo-server-testing": "^2.25.2",
+    "eslint": "^7.29.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "husky": "^6.0.0",
+    "lint-staged": "^11.0.0",
+    "prettier": "^2.3.2",
+    "ts-node": "^10.0.0",
+    "ts-node-dev": "^1.1.6",
+    "tsconfig-paths": "^3.9.0",
+    "typescript": "^4.3.4"
+  },
+  "tsed": {
+    "packageManager": "yarn",
+    "convention": "default"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "post-commit": "git update-index --again"
+    }
+  }
+}
