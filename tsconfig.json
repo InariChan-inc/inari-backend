@@ -1,6 +1,9 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
+    "paths": {
+      "@root/*": ["./*"]
+    },
+    "baseUrl": "src",
     "module": "commonjs",
     "target": "esnext",
     "sourceMap": true,

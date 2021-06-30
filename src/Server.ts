@@ -9,25 +9,22 @@ import cors from "cors";
 import "@tsed/ajv";
 import "@tsed/typeorm";
 import {config, rootDir} from "./config";
-import { MyDataSource } from "./graphql/datasource/MyDataSource";
-import { UserResolve } from "./graphql/resolves/UserResolve";
 
 @Configuration({
   ...config,
   acceptMimes: ["application/json"],
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
-  mount: {},
-  imports: [
-    MyDataSource
-  ],
-  graphql: {
-    default: {
-      path: "/",
-      resolvers: [UserResolve],
-      buildSchemaOptions: {}
-    }
+  mount: {
+    "/rest": [
+      `${rootDir}/controllers/**/*.ts`
+    ]
   },
+  "componentsScan": [
+    "${rootDir}/middleware/**/*.ts",
+    "${rootDir}/services/**/*.ts",
+    "${rootDir}/repositories/**/*.ts"
+  ],
   exclude: [
     "**/*.spec.ts"
   ]

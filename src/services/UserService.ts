@@ -1,23 +1,37 @@
-import { Service } from "@tsed/common";
-import { User } from "../entity/User";
-
+import { Inject, Service } from "@tsed/common";
+import { UseConnection } from "@tsed/typeorm";
+import { User } from "@root/entity/User";
+import { UserInput } from "../inputs/User/UserInput";
+import { UserLoginInput } from "../inputs/User/UserLoginInput";
+import { UserRepository } from "@root/repositories/UserRepository";
 @Service()
 export class UserService {
-  users: User[] = [
-    new User({
-      id: 1,
-      name: "name",
-      email: "test@test.ua",
-      password: "sdf"
-    })
-  ];
+  @Inject()
+  @UseConnection("default")
+  userRepository: UserRepository;
 
-  async findById(id: number) {
-    return this.users.find((item) => item.id === id);
+  async create(userInput: UserInput) {
+    return this.userRepository.save(userInput);
   }
 
-  async findAll(options: any) {
-    console.log(this.users);
-    return this.users;
+  async findById(userId: number) {
+    return this.userRepository.findOne(userId);
   }
+
+  async findOne(userInputLogin: UserLoginInput): Promise<User | undefined> {
+    return await this.userRepository.findOne(userInputLogin);
+  }
+
+  async findAll() {
+    return this.userRepository.find();
+  }
+
+  // async findById(id: number) {
+  //   return this.users.find((item) => item.id === id);
+  // }
+
+  // async findAll(options: any) {
+  //   console.log(this.users);
+  //   return this.users;
+  // }
 }

@@ -3,7 +3,7 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 @ObjectType()
-export class User {
+export class Files {
     @Field(() => ID)
     @PrimaryGeneratedColumn()
     id: number
@@ -14,13 +14,9 @@ export class User {
 
     @Field(() => String)
     @Column()
-    email: string
+    path: string
 
-    @Field(() => String)
+    @Field(() => Boolean)
     @Column()
-    password: string
-
-    public verifyPassword(password: string) {
-        return this.password === password
-    }
+    isTmp: boolean
 }
