@@ -4,13 +4,15 @@ import { UserService } from "@root/services/UserService";
 import { Arg, Authorized, Ctx, Mutation, Query, UseMiddleware } from "type-graphql";
 import { User } from "@root/entity/User";
 import { UserInput } from "@root/inputs/User/UserInput";
-import { NotFound } from "@tsed/exceptions";
+import { NotFound, Unauthorized } from "@tsed/exceptions";
 import { UserLoginInput } from "@root/inputs/User/UserLoginInput";
 import { LoginMidlleware } from "@root/midlleware/LoginMidlleware";
 import { Context, UseBefore } from "@tsed/common";
 import { Token } from "@root/entity/Token";
 import { JWTMidlleware } from "@root/midlleware/JWTMidlleware";
 import { TContext } from "@root/interface/Context";
+import { JWThelper } from "@root/helpers/JWTHelpers";
+import { AuthenticationError } from "apollo-server-express";
 @ResolverService(User)
 export class UserResolve {
   @Inject(UserService)
@@ -33,9 +35,15 @@ export class UserResolve {
     return this.userService.create(userInput);
   }
 
-  @UseMiddleware(LoginMidlleware)
   @Mutation(() => Token)
   async loginUser(@Arg("data") userLoginInput: UserLoginInput) {
+    let user = await this.userService.validateUser(userLoginInput);
+
+    if (!user) {
+      throw new AuthenticationError("Wrong credentials");
+    }
+    
+    return new Token(JWThelper.createToken(user));
   }
 
   @Query((returns) => [User], { description: "Get all the recipes from around the world " })

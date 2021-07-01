@@ -1,8 +1,10 @@
+import { Email } from "@tsed/schema";
 import { Field, ID, ObjectType } from "type-graphql";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, Index, PrimaryGeneratedColumn, Unique } from "typeorm";
 
 @Entity()
 @ObjectType()
+@Unique('my_unique_constraint', ['email'])
 export class User {
     @Field(() => ID)
     @PrimaryGeneratedColumn()
@@ -14,13 +16,10 @@ export class User {
 
     @Field(() => String)
     @Column()
+    @Email()
     email: string
 
     @Field(() => String)
     @Column()
-    password: string
-
-    public verifyPassword(password: string) {
-        return this.password === password
-    }
+    passwordHash: string
 }
