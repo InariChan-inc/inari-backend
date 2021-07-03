@@ -3,7 +3,7 @@ import { MiddlewareInterface, NextFn, ResolverData } from "type-graphql";
 import * as jwt from "jsonwebtoken";
 import { TContext } from "@root/interface/Context";
 import { Unauthorized } from "@tsed/exceptions";
-import { User } from "@root/entity/User";
+import { User } from "@root/entity/User/User";
 import { Middleware } from "@tsed/common";
 import { AuthenticationError } from "apollo-server-express";
 

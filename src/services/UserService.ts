@@ -1,6 +1,6 @@
-import { Inject, Service } from "@tsed/common";
+import { Inject, Injectable, Service } from "@tsed/common";
 import { UseConnection } from "@tsed/typeorm";
-import { User } from "@root/entity/User";
+import { User } from "@root/entity/User/User";
 import { UserInput } from "../inputs/User/UserInput";
 import { UserLoginInput } from "../inputs/User/UserLoginInput";
 import { UserRepository } from "@root/repositories/UserRepository";
@@ -31,7 +31,7 @@ export class UserService {
     return this.userRepository.findOne(userId);
   }
 
-  async findOne(userInputLogin: UserLoginInput): Promise<User | undefined> {
+  async findOne(userInputLogin: UserLoginInput | any): Promise<User | undefined> {
     return await this.userRepository.findOne(userInputLogin);
   }
 

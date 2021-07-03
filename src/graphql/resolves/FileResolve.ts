@@ -3,7 +3,7 @@ import {ResolverService} from "@tsed/graphql";
 import { UserService } from "../../services/UserService";
 import {Arg, Mutation, Query} from "type-graphql";
 import { UserInput } from "../../inputs/User/UserInput";
-import { Files } from "../../entity/File";
+import { Files } from "../../entity/Images";
 
 @ResolverService(Files)
 export class FileResolve {

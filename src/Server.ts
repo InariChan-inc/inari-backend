@@ -9,6 +9,7 @@ import cors from "cors";
 import "@tsed/ajv";
 import "@tsed/typeorm";
 import {config, rootDir} from "./config";
+import { useContainer } from "class-validator";
 
 @Configuration({
   ...config,
@@ -23,7 +24,8 @@ import {config, rootDir} from "./config";
   "componentsScan": [
     "${rootDir}/middleware/**/*.ts",
     "${rootDir}/services/**/*.ts",
-    "${rootDir}/repositories/**/*.ts"
+    "${rootDir}/repositories/**/*.ts",
+    "${rootDir}/validators/**/*.ts"
   ],
   exclude: [
     "**/*.spec.ts"
@@ -37,6 +39,7 @@ export class Server {
   settings: Configuration;
 
   $beforeRoutesInit(): void {
+
     this.app
       .use(cors())
       .use(cookieParser())

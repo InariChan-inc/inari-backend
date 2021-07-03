@@ -1,4 +1,4 @@
-import { User } from "@root/entity/User";
+import { User } from "@root/entity/User/User";
 import * as jwt from "jsonwebtoken";
 
 export class JWThelper {
