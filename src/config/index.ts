@@ -12,31 +12,7 @@ export const config: Partial<TsED.Configuration> = {
   version,
   rootDir,
   logger: loggerConfig,
-  typeorm: [{
-    "name": "default",
-    "type": "postgres",
-    "host": "localhost",
-    "port": 5432,
-    "username": "test",
-    "password": "test",
-    "database": "test",
-    "synchronize": true,
-    "logging": false,
-    "entities": [
-      "${rootDir}/entity/**/*.{js,ts}"
-    ],
-    "migrations": [
-      "${rootDir}/migration/**/*.{js,ts}"
-    ],
-    "subscribers": [
-      "${rootDir}/subscriber/**/*.{js,ts}"
-    ],
-    "cli": {
-      "entitiesDir": "${rootDir}/entity",
-      "migrationsDir": "${rootDir}/migration",
-      "subscribersDir": "${rootDir}/subscriber"
-    }
-  }],
+  typeorm: typeormConfig,
   typegraphql: {
     default: {
       path: "/graphql",

@@ -1,19 +1,17 @@
-import { Anime } from "@root/entity/Anime/Anime";
 import { Permission } from "@root/entity/User/Permission";
+import { Roles } from "@root/entity/User/Roles";
 import { User } from "@root/entity/User/User";
+import { Passwordhelper } from "@root/helpers/PasswordHelper";
 import { AnimePermissions } from "@root/permission/AnimePermissions";
-import { PermissionRepository } from "@root/repositories/PermissionRepository";
-import { PermissionService } from "@root/services/PermissionService";
 import { Command, CommandProvider, Inject } from "@tsed/cli-core";
-import { TypeORMService, UseConnection } from "@tsed/typeorm";
-import { Connection, createConnection } from "typeorm";
+import { createConnection } from "typeorm";
 
-export interface PermissionCommandContext {
+export interface UserCommandContext {
     action: 'init';
 }
 
 @Command({
-    name: "permission",
+    name: "user",
     description: "Command description",
     args: {
         action: {
@@ -25,11 +23,11 @@ export interface PermissionCommandContext {
     options: {},
     allowUnknownOption: false
 })
-export class PermissionComand implements CommandProvider {
-    async $exec(ctx: PermissionCommandContext): Promise<any> {
+export class UserComand implements CommandProvider {
+    async $exec(ctx: UserCommandContext): Promise<any> {
         return [
             {
-                title: "Ініцілізаці пермішін",
+                title: "Ініцілізаці root користувача",
                 task: async () => {
                     console.log(__dirname + "/../entity/**/*.ts");
 
@@ -47,24 +45,24 @@ export class PermissionComand implements CommandProvider {
                         ],
                         synchronize: true,
                     }).then(async connection => {
-                        let RPermission = connection.manager.getRepository(Permission);
+                        let RUser = connection.manager.getRepository(User);
+                        let RRoles = connection.manager.getRepository(Roles);
 
-                        let animePrms = AnimePermissions.get();
+                        let role = new Roles();
+                        role.name = "root";
+                        role.key = "root";
+                        role.permissions = ["userCreate", "userUpdate", "userDelete"];
+                        role = await RRoles.save(role);
 
-                        for (const index in animePrms) {
-                            let prmAction = animePrms[index];
-                            let prm = new Permission();
-
-                            if (!await RPermission.findOne({ key: prmAction.key })) {
-                                prm.key = prmAction.key;
-                                prm.resolves = prmAction.resolves;
-                                RPermission.save(prm);
-                            }
-
-                            console.log(`done`);
-                        }
-                        return true;
+                        let user = new User();
+                        user.name = "admin";
+                        user.email = "admin@admin.ua";
+                        user.passwordHash = await Passwordhelper.createHash("admin1");
+                        user.role = role;
+                        RUser.save(user);
                     }).catch(error => console.log(error))
+
+                    return true;
                 }
             }
         ];

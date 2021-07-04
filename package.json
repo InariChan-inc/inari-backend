@@ -2,9 +2,6 @@
   "name": "inari",
   "version": "1.0.0",
   "description": "",
-  "_moduleAliases": {
-    "@root": "dist"
-  },
   "scripts": {
     "build": "yarn run tsc",
     "tsc": "tsc --project tsconfig.compile.json",
@@ -17,20 +14,20 @@
     "typeorm": "tsed typeorm"
   },
   "dependencies": {
-    "@tsed/ajv": "^6.59.0",
+    "@tsed/ajv": "6.59.1",
     "@tsed/cli": "^3.3.0",
     "@tsed/cli-core": "^3.3.0",
-    "@tsed/common": "^6.59.0",
-    "@tsed/core": "^6.59.0",
-    "@tsed/di": "^6.59.0",
-    "@tsed/exceptions": "^6.59.0",
-    "@tsed/graphql": "^6.59.0",
-    "@tsed/json-mapper": "^6.59.0",
-    "@tsed/passport": "^6.59.0",
-    "@tsed/platform-express": "^6.59.0",
-    "@tsed/schema": "^6.59.0",
-    "@tsed/typegraphql": "^6.59.0",
-    "@tsed/typeorm": "^6.59.0",
+    "@tsed/common": "6.59.1",
+    "@tsed/core": "6.59.1",
+    "@tsed/di": "6.59.1",
+    "@tsed/exceptions": "6.59.1",
+    "@tsed/graphql": "6.59.1",
+    "@tsed/json-mapper": "6.59.1",
+    "@tsed/passport": "6.59.1",
+    "@tsed/platform-express": "6.59.1",
+    "@tsed/schema": "6.59.1",
+    "@tsed/typegraphql": "6.59.1",
+    "@tsed/typeorm": "6.59.1",
     "ajv": "^8.6.0",
     "apollo-datasource": "^0.9.0",
     "apollo-datasource-rest": "^0.14.0",
@@ -59,9 +56,9 @@
     "typeorm": "^0.2.34"
   },
   "devDependencies": {
-    "@tsed/cli-plugin-eslint": "3.3.0",
-    "@tsed/cli-plugin-passport": "3.3.0",
-    "@tsed/cli-plugin-typeorm": "3.3.0",
+    "@tsed/cli-plugin-eslint": "3.3.1",
+    "@tsed/cli-plugin-passport": "3.3.1",
+    "@tsed/cli-plugin-typeorm": "3.3.1",
     "@types/bcrypt": "^5.0.0",
     "@types/compression": "^1.7.0",
     "@types/cookie-parser": "^1.4.2",
@@ -87,6 +84,9 @@
     "tsconfig-paths": "^3.9.0",
     "typescript": "^4.3.4",
     "typescript-transform-paths": "^3.0.1"
+  },
+  "_moduleAliases": {
+    "@root": "dist"
   },
   "tsed": {
     "packageManager": "yarn",

@@ -11,7 +11,10 @@ export class Roles {
     @Column()
     name: string
 
-    @Column("simple-array")
+    @Column({unique: true})
+    key: string
+
+    @Column({type: "simple-array", nullable: true})
     roles: string[]
 
     @Column("simple-array")
