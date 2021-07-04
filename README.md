@@ -22,9 +22,9 @@ $ yarn build
 $ yarn start:prod
 ```
 ## Init default user
-``
+```batch
 $ npm install -g @tsed/cli
 $ tsed run user
-``
+```
 Логін admin@admin.ua
 Пароль admin1
