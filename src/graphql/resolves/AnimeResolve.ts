@@ -22,7 +22,7 @@ export class AnimeResolve {
     }
 
     @Query((returns) => Anime)
-    async userProfile(@Arg("id") id: number) {
+    async viewAnime(@Arg("id") id: number) {
         const anime = await this.animeService.findById(id);
 
         if (anime === undefined) {

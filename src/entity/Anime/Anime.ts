@@ -37,6 +37,7 @@ export class Anime {
     @PrimaryGeneratedColumn()
     id: number
 
+    @Field()
     @Column()
     name: string
 
@@ -47,12 +48,15 @@ export class Anime {
     @Column("simple-json")
     name_other: { ua: string, en?: string, ru?: string, jp?: string };
 
+    @Field()
     @Column("text")
     description: string
-
+    
+    @Field()
     @Column()
     current_count_episodes: number
 
+    @Field()
     @Column()
     count_episodes: number
 
@@ -66,23 +70,29 @@ export class Anime {
     @OneToMany(() => AnimeToTeam, animeToTeam => animeToTeam.team)
     public animeToTeams!: AnimeToTeam[];
 
+    @Field()
     @Column()
     duration: number
 
+    @Field(() => FormatAnimeEnum)
     @Column()
     format: FormatAnimeEnum
 
+    @Field(() => SeasonAnimeEnum)
     @Column()
     season: SeasonAnimeEnum
 
+    @Field(() => StatusAnimeEnum)
     @Column()
     status: StatusAnimeEnum
 
+    @Field(() => Date)
     @Column()
     date_release: Date
 
+    @Field(() => Date, { nullable: true })
     @Column({ nullable: true })
-    date_end: Date
+    date_end?: Date
 
     @CreateDateColumn()
     created_at: Date
