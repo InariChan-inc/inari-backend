@@ -1,13 +1,11 @@
-import { Field, ID, ObjectType } from "type-graphql";
+import { ObjectType } from "type-graphql";
 import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { Player } from "../Player/Player";
-import { Team } from "../Team/Team";
-import { Anime } from "./Anime";
+import { VideoPlayer } from "../Player/VideoPlayer";
 import { Episode } from "./Episode";
 
 @Entity()
 @ObjectType()
-export class EpisodeToPlayer {
+export class EpisodeToVideoPlayer {
     @PrimaryGeneratedColumn()
     public postToCategoryId!: number;
 
@@ -20,9 +18,9 @@ export class EpisodeToPlayer {
     @Column()
     public iframe!: string;
 
-    @ManyToOne(() => Episode, episode => episode.episodeToPlayers)
+    @ManyToOne(() => Episode, episode => episode.episodeToVideoPlayers)
     public episode!: Episode;
 
-    @ManyToOne(() => Player, player => player.playerToEpisodes)
-    public player!: Player;
+    @ManyToOne(() => VideoPlayer, player => player.videoPlayerToEpisodes)
+    public videoPlayer!: VideoPlayer;
 }

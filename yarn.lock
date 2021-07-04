@@ -265,7 +265,7 @@
   dependencies:
     tslib "2.2.0"
 
-"@tsed/cli-core@^3.3.0":
+"@tsed/cli-core@3.3.0", "@tsed/cli-core@^3.3.0":
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/@tsed/cli-core/-/cli-core-3.3.0.tgz#5212facdc01ec49be2b3f0d33f529f88ef1bcf9e"
   integrity sha512-wPSYck4qEoqZ7jsTejwyTqBjdPFXYir8KpXi6BnB2wVHawvwRRHTNSmDIvAnOY+MUrWWql9sBEnLjJuq+DA6vQ==
@@ -323,6 +323,17 @@
   integrity sha512-41SSrSiiA4/VDffg86mkBwgaHvaRytVdUkDvK+tQFd8W1cftC2lWK98IZx4cPo3CNOpyt67fcwzv+7dnTMWL+Q==
   dependencies:
     change-case "4.1.2"
+    tslib "2.1.0"
+
+"@tsed/cli@^3.3.0":
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/@tsed/cli/-/cli-3.3.0.tgz#d1e592f27ffec1dd5d784b1ee727e572a1d85068"
+  integrity sha512-QAeTxES9QxW52i/yLP4b5Ja07jCQ45Si1/D6lRaKspkiNUnFul/Ljgh2dv91qsTK+XMSvy1L1fwwLejkd3maKw==
+  dependencies:
+    "@tsed/cli-core" "3.3.0"
+    "@tsed/logger" "^5.12.0"
+    change-case "4.1.2"
+    normalize-path "3.0.0"
     tslib "2.1.0"
 
 "@tsed/common@^6.59.0":

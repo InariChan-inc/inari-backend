@@ -14,7 +14,7 @@ export class JWTMidlleware implements MiddlewareInterface<TContext> {
 
   async use({ context }: ResolverData<TContext>, next: NextFn) {
     const req = context.req;
-    const authHeader = req.headers['authorization']
+    const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1]
     if (token == null) return new AuthenticationError("Token not found")
 
@@ -26,7 +26,7 @@ export class JWTMidlleware implements MiddlewareInterface<TContext> {
         return resolve(user);
       })
     });
-    
+
     context.user = user;
     return next();
   }

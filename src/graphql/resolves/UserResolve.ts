@@ -1,12 +1,11 @@
 import { Inject } from "@tsed/di";
 import { ResolverService } from "@tsed/graphql";
 import { UserService } from "@root/services/UserService";
-import { Arg, Authorized, Ctx, Mutation, Query, UseMiddleware } from "type-graphql";
+import { Arg, Ctx, Mutation, Query, UseMiddleware } from "type-graphql";
 import { User } from "@root/entity/User/User";
 import { UserInput } from "@root/inputs/User/UserInput";
-import { NotFound, Unauthorized } from "@tsed/exceptions";
+import { NotFound } from "@tsed/exceptions";
 import { UserLoginInput } from "@root/inputs/User/UserLoginInput";
-import { Context, UseBefore } from "@tsed/common";
 import { Token } from "@root/entity/Token";
 import { JWTMidlleware } from "@root/midlleware/JWTMidlleware";
 import { TContext } from "@root/interface/Context";

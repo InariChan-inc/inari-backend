@@ -8,8 +8,8 @@ export class Permission {
     @PrimaryGeneratedColumn()
     id: number
 
-    @Column()
-    name: string
+    @Column("simple-array")
+    resolves: string[]
 
     @Column({ unique: true, })
     key: string

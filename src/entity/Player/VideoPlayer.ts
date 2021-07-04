@@ -1,10 +1,10 @@
 import { Field, ID, ObjectType } from "type-graphql";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { EpisodeToPlayer } from "../Anime/EpisodeToPlayer";
+import { EpisodeToVideoPlayer } from "../Anime/EpisodeToVideoPlayer";
 
 @Entity()
 @ObjectType()
-export class Player {
+export class VideoPlayer {
     @Field(() => ID)
     @PrimaryGeneratedColumn()
     id: number
@@ -12,6 +12,6 @@ export class Player {
     @Column()
     name: string
 
-    @OneToMany(() => EpisodeToPlayer, playerToEpisodes => playerToEpisodes.episode)
-    public playerToEpisodes!: EpisodeToPlayer[];
+    @OneToMany(() => EpisodeToVideoPlayer, videoPlayerToEpisodes => videoPlayerToEpisodes.episode)
+    public videoPlayerToEpisodes!: EpisodeToVideoPlayer[];
 }
