@@ -11,6 +11,11 @@ export class AnimeService {
   animeRepository: AnimeRepository;
 
   async create(anime: Anime) {
-      return this.animeRepository.save(anime);
+    return this.animeRepository.save(anime);
   }
+
+  async findById(id: number) {
+    return this.animeRepository.findOne(id);
+  }
+  
 }
