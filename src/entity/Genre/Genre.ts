@@ -4,7 +4,7 @@ import { Anime } from "../Anime/Anime";
 
 @Entity()
 @ObjectType()
-export class Janre {
+export class Genre {
     @Field(() => ID)
     @PrimaryGeneratedColumn()
     id: number
@@ -12,6 +12,6 @@ export class Janre {
     @Column()
     name: string
 
-    @ManyToOne(() => Anime, anime => anime.janres)
+    @ManyToOne(() => Anime, anime => anime.genres)
     animes: Anime
 }

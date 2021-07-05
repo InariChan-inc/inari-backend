@@ -2,7 +2,7 @@ import { AnimeInput } from "@root/inputs/Anime/AnimeInput";
 import { Field, ID, ObjectType } from "type-graphql";
 import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Images } from "../Images";
-import { Janre } from "../Janre/Janre";
+import { Genre } from "../Genre/Genre";
 import { Team } from "../Team/Team";
 import { User } from "../User/User";
 import { AnimeToTeam } from "./AnimeToTeam";
@@ -60,8 +60,8 @@ export class Anime {
     @Column()
     count_episodes: number
 
-    @OneToMany(() => Janre, janre => janre.animes)
-    public janres: Janre[]
+    @OneToMany(() => Genre, genre => genre.animes)
+    public genres: Genre[]
 
     @OneToOne(() => User)
     @JoinColumn({ name: "user_created_id" })

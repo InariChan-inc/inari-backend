@@ -7,6 +7,9 @@ import { AnimeInput } from "@root/inputs/Anime/AnimeInput";
 import { TContext } from "@root/interface/Context";
 import { NotFound } from "@tsed/exceptions";
 import { number } from "@tsed/schema";
+import { AnimeData } from "@root/data/anime/AnimeData";
+import { Pageable } from "@root/data/pageable/Pageable";
+import { AnimePagination } from "@root/data/pageable/AnimePagination";
 
 @ResolverService(Anime)
 export class AnimeResolve {
@@ -21,14 +24,17 @@ export class AnimeResolve {
         return this.animeService.create(anime);
     }
 
-    @Query((returns) => Anime)
+    @Query((returns) => AnimeData)
     async viewAnime(@Arg("id") id: number) {
         const anime = await this.animeService.findById(id);
 
-        if (anime === undefined) {
-            throw new NotFound("anime not found");
-        }
-
         return anime;
+    }
+
+    @Query((returns) => AnimePagination)
+    async animes(@Arg("data") pageable: Pageable): Promise<AnimePagination> {
+        const anime = await this.animeService.index(pageable);
+
+        return anime
     }
 }
