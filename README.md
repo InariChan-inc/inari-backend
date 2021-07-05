@@ -28,3 +28,5 @@ $ tsed run user
 ```
 Логін admin@admin.ua
 Пароль admin1
+
+[![Deployment status from DeployBot](https://inari.deploybot.com/badge/45290642152404/194241.svg)](https://deploybot.com)
