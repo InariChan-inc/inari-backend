@@ -2,7 +2,7 @@ import { CollectionOf, Default, Generics, Integer, MinLength } from "@tsed/schem
 import { Field, ObjectType } from "type-graphql";
 import { AnimeData } from "../anime/AnimeData";
 import { Pageable } from "./Pageable";
-import PaginatedResponse from "./PaginationResponse";
+import PaginatedResponse from "./PaginatedResponse";
 
 @ObjectType()
 export class AnimePagination extends PaginatedResponse(AnimeData) {

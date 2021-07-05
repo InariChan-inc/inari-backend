@@ -7,16 +7,17 @@
     },
     "plugins": [
       { "transform": "typescript-transform-paths" },
-      { "transform": "typescript-transform-paths", "afterDeclarations": true }
+      //yarn { "transform": "typescript-transform-paths", "afterDeclarations": true }
     ],
     "outDir": "./dist",
     "moduleResolution": "node",
-    "declaration": true,
+    "declaration": false,
     "noResolve": false,
     "preserveConstEnums": true,
     "sourceMap": true,
     "noEmit": false,
     "emitDeclarationOnly": false,
-    "inlineSources": true
+    "inlineSources": true,
+    "skipLibCheck": true
   }
 }

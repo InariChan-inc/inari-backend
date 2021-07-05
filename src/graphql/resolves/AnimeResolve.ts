@@ -10,6 +10,7 @@ import { number } from "@tsed/schema";
 import { AnimeData } from "@root/data/anime/AnimeData";
 import { Pageable } from "@root/data/pageable/Pageable";
 import { AnimePagination } from "@root/data/pageable/AnimePagination";
+import { IPaginatedResponse } from "@root/data/pageable/PaginatedResponse";
 
 @ResolverService(Anime)
 export class AnimeResolve {
@@ -32,7 +33,7 @@ export class AnimeResolve {
     }
 
     @Query((returns) => AnimePagination)
-    async animes(@Arg("data") pageable: Pageable): Promise<AnimePagination> {
+    async animes(@Arg("data") pageable: Pageable): Promise<IPaginatedResponse> {
         const anime = await this.animeService.index(pageable);
 
         return anime
