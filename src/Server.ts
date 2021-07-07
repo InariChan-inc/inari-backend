@@ -39,7 +39,7 @@ export class Server {
   settings: Configuration;
 
   $beforeRoutesInit(): void {
-
+    useContainer(this.app.injector, { fallback: true });
     this.app
       .use(cors())
       .use(cookieParser())

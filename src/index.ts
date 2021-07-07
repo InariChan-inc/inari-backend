@@ -8,7 +8,7 @@ async function bootstrap() {
   try {
     $log.debug("Start server...");
     const platform = await PlatformExpress.bootstrap(Server);
-    useContainer(platform.app.injector, { fallback: true });
+   // useContainer(platform.app.injector, { fallback: true });
 
     await platform.listen();
     $log.debug("Server initialized");
