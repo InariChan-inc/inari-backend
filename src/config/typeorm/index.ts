@@ -6,17 +6,19 @@ if (process.env.NODE_ENV == "test") {
   db = {
     username: "test",
     password: "test",
-    database: "test"
+    database: "test",
+    port: 5433,
   };
 } else {
   db = {
     username: "inari",
     password: "inari",
-    database: "inari"
+    database: "inari",
+    port: 5432,
   };
 }
 
-export default [
+export default 
   {
     name: "default",
     type: "postgres",
@@ -36,4 +38,4 @@ export default [
       subscribersDir: "${rootDir}/subscriber"
     }
   }
-];
+;
