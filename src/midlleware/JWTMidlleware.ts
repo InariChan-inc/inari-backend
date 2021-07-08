@@ -12,7 +12,7 @@ export class JWTMidlleware implements MiddlewareInterface<TContext> {
   constructor(private userService: UserService) {
   }
 
-  async use({ context }: ResolverData<TContext>, next: NextFn) {
+  async use({ context, args }: ResolverData<TContext>, next: NextFn) {
     const req = context.req;
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1]

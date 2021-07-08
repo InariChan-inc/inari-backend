@@ -37,7 +37,7 @@ export class UserService {
   async createNewToken(user: User): Promise<Token> {
     let [tokenRefresh, tokenRefreshExp] = JWThelper.createTokenRefresh(user);
     let [token, tokenExp] = JWThelper.createToken(user);
-    this.updateById({id: user.id}, {tokenRefresh});
+    await this.updateById({id: user.id}, {tokenRefresh});
 
     return new Token(token, tokenRefresh, tokenExp, tokenRefreshExp);
   }
@@ -56,7 +56,7 @@ export class UserService {
   }
 
   async findById(userId: number) {
-    return this.userRepository.findOne(userId);
+    return this.userRepository.findOne({id: userId});
   }
 
   async findOne(userInputLogin: UserLoginInput | any): Promise<User | undefined> {

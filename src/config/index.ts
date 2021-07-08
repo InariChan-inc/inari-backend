@@ -13,7 +13,7 @@ if (process.env.NODE_ENV == "test") {
     username: "test",
     password: "test",
     database: "test",
-    port: 5433,
+    port: 5436,
   };
 } else {
   db = {
@@ -21,7 +21,7 @@ if (process.env.NODE_ENV == "test") {
     username: "inari",
     password: "inari",
     database: "inari",
-    port: 5432,
+    port: 5435,
   };
 }
 

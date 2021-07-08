@@ -39,6 +39,7 @@ export class UserResolve {
   }
 
   @Mutation(() => Boolean)
+  @UseMiddleware(JWTMidlleware)
   async changeUserTheme(@Arg("data") themeInput: ThemeInput, @Ctx() ctx: TContext) {
     let user = ctx.user as User;
     if (await this.userService.updateById({id: user.id}, {theme: themeInput.theme})) {
