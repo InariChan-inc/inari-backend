@@ -4,5 +4,5 @@ import { Req, Res } from "@tsed/common";
 export class TContext {
     req: any;
     res: Res;
-    user: User;
+    user?: User;
 }

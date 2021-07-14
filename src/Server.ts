@@ -10,6 +10,7 @@ import "@tsed/ajv";
 import "@tsed/typeorm";
 import {config, rootDir} from "./config";
 import { useContainer } from "class-validator";
+import { JWTMidlleware } from "./midlleware/JWTMidlleware";
 
 @Configuration({
   ...config,
@@ -48,6 +49,7 @@ export class Server {
       .use(bodyParser.json())
       .use(bodyParser.urlencoded({
         extended: true
-      }));
+      }))
+      .use(JWTMidlleware);
   }
 }

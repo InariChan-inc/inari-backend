@@ -1,4 +1,4 @@
-import {Inject, PlatformTest} from "@tsed/common";
+import {Inject, PlatformApplication, PlatformTest} from "@tsed/common";
 import {ApolloService} from "@tsed/apollo";
 import "@tsed/platform-express";
 import {ApolloServerTestClient, createTestClient} from "apollo-server-testing";
@@ -7,14 +7,23 @@ import {Server} from "../Server";
 import {DEFAULT_CONNECTION} from "@root/services/connections/DefaultConnection";
 import {User} from "@root/entity/User/User";
 import {getServers} from "dns";
+import {JWTMidlleware} from "../midlleware/JWTMidlleware";
+const express = require("express");
 
 const registartionUser = gql`
   mutation {
     registartionUser(data: {email: "dix3@gmail.com", name: "dix3", password: "test12"}) {
-      token
-      tokenExp
-      refreshToken
-      refreshTokenExp
+      tokenData {
+        token
+        tokenExp
+        refreshToken
+        refreshTokenExp
+      }
+      userData {
+        id
+        name
+        email
+      }
     }
   }
 `;
@@ -22,10 +31,17 @@ const registartionUser = gql`
 const loginUser = gql`
   mutation {
     loginUser(data: {email: "dix3@gmail.com", password: "test12"}) {
-      token
-      tokenExp
-      refreshToken
-      refreshTokenExp
+      tokenData {
+        token
+        tokenExp
+        refreshToken
+        refreshTokenExp
+      }
+      userData {
+        id
+        name
+        email
+      }
     }
   }
 `;
@@ -45,25 +61,20 @@ const changeUserTheme = gql`
   }
 `;
 
-function getGraphqlClient(token?: string) {
+function getGraphqlClient(user?: User) {
   let server = PlatformTest.get<ApolloService>(ApolloService).get("typegraphql-default")!;
-  server.requestOptions.context = {
-    req: {
-      headers: {
-        authorization: `Bearer ${token}`
-      }
-    }
-  };
+
+  if (user) {
+    server.requestOptions.context = {
+      user: user
+    };
+  }
+
   return createTestClient(server);
 }
 
 describe("User", () => {
-  let request: ApolloServerTestClient;
   beforeAll(PlatformTest.bootstrap(Server));
-  beforeAll(() => {
-    const server = PlatformTest.get<ApolloService>(ApolloService).get("typegraphql-default")!;
-    request = createTestClient(server);
-  });
   afterAll(PlatformTest.reset);
 
   beforeEach(async () => {
@@ -72,81 +83,116 @@ describe("User", () => {
   });
 
   it("registartionUser", async () => {
-    const response = await request.mutate({
+    const response = await getGraphqlClient().mutate({
       mutation: registartionUser,
       variables: {}
     });
 
     expect(response.data).toEqual({
       registartionUser: {
-        token: expect.any(String),
-        refreshToken: expect.any(String),
-        tokenExp: expect.any(Number),
-        refreshTokenExp: expect.any(Number)
+        tokenData: {
+          token: expect.any(String),
+          refreshToken: expect.any(String),
+          tokenExp: expect.any(Number),
+          refreshTokenExp: expect.any(Number)
+        },
+        userData: {
+          id: expect.any(String),
+          name: expect.any(String),
+          email: expect.any(String)
+        }
       }
     });
   });
 
   it("loginUser", async () => {
-    const responseR = await request.mutate({
+    const responseR = await getGraphqlClient().mutate({
       mutation: registartionUser,
       variables: {}
     });
 
     expect(responseR.data).toEqual({
       registartionUser: {
-        token: expect.any(String),
-        refreshToken: expect.any(String),
-        tokenExp: expect.any(Number),
-        refreshTokenExp: expect.any(Number)
+        tokenData: {
+          token: expect.any(String),
+          refreshToken: expect.any(String),
+          tokenExp: expect.any(Number),
+          refreshTokenExp: expect.any(Number)
+        },
+        userData: {
+          id: expect.any(String),
+          name: expect.any(String),
+          email: expect.any(String)
+        }
       }
     });
 
-    const response = await request.mutate({
+    const response = await getGraphqlClient().mutate({
       mutation: loginUser,
       variables: {}
     });
 
     expect(response.data).toEqual({
       loginUser: {
-        token: expect.any(String),
-        refreshToken: expect.any(String),
-        tokenExp: expect.any(Number),
-        refreshTokenExp: expect.any(Number)
+        tokenData: {
+          token: expect.any(String),
+          refreshToken: expect.any(String),
+          tokenExp: expect.any(Number),
+          refreshTokenExp: expect.any(Number)
+        },
+        userData: {
+          id: expect.any(String),
+          name: expect.any(String),
+          email: expect.any(String)
+        }
       }
     });
   });
 
   it("userProfile", async () => {
-    const responseR = await request.mutate({
+    const responseR = await getGraphqlClient().mutate({
       mutation: registartionUser,
       variables: {}
     });
 
     expect(responseR.data).toEqual({
       registartionUser: {
-        token: expect.any(String),
-        refreshToken: expect.any(String),
-        tokenExp: expect.any(Number),
-        refreshTokenExp: expect.any(Number)
+        tokenData: {
+          token: expect.any(String),
+          refreshToken: expect.any(String),
+          tokenExp: expect.any(Number),
+          refreshTokenExp: expect.any(Number)
+        },
+        userData: {
+          id: expect.any(String),
+          name: expect.any(String),
+          email: expect.any(String)
+        }
       }
     });
 
-    const response = await request.mutate({
+    const response = await getGraphqlClient().mutate({
       mutation: loginUser,
       variables: {}
     });
 
     expect(response.data).toEqual({
       loginUser: {
-        token: expect.any(String),
-        refreshToken: expect.any(String),
-        tokenExp: expect.any(Number),
-        refreshTokenExp: expect.any(Number)
+        tokenData: {
+          token: expect.any(String),
+          refreshToken: expect.any(String),
+          tokenExp: expect.any(Number),
+          refreshTokenExp: expect.any(Number)
+        },
+        userData: {
+          id: expect.any(String),
+          name: expect.any(String),
+          email: expect.any(String)
+        }
       }
     });
 
-    const responseUser = await getGraphqlClient(response.data.loginUser.token).query({
+    const responseUser = await getGraphqlClient(response.data.loginUser.userData).query({
       query: userProfile
     });
 
@@ -159,21 +205,28 @@ describe("User", () => {
   });
 
   it("changeUserTheme", async () => {
-    const responseR = await request.mutate({
+    const responseR = await getGraphqlClient().mutate({
       mutation: registartionUser,
       variables: {}
     });
 
     expect(responseR.data).toEqual({
       registartionUser: {
-        token: expect.any(String),
-        refreshToken: expect.any(String),
-        tokenExp: expect.any(Number),
-        refreshTokenExp: expect.any(Number)
+        tokenData: {
+          token: expect.any(String),
+          refreshToken: expect.any(String),
+          tokenExp: expect.any(Number),
+          refreshTokenExp: expect.any(Number)
+        },
+        userData: {
+          id: expect.any(String),
+          name: expect.any(String),
+          email: expect.any(String)
+        }
       }
     });
 
-    const responseUser = await getGraphqlClient(responseR.data.registartionUser.token).mutate({
+    const responseUser = await getGraphqlClient(responseR.data.registartionUser.userData).mutate({
       mutation: changeUserTheme
     });
 
@@ -183,17 +236,24 @@ describe("User", () => {
   });
 
   it("refsreshToken", async () => {
-    const responseR = await request.mutate({
+    const responseR = await getGraphqlClient().mutate({
       mutation: registartionUser,
       variables: {}
     });
 
     expect(responseR.data).toEqual({
       registartionUser: {
-        token: expect.any(String),
-        refreshToken: expect.any(String),
-        tokenExp: expect.any(Number),
-        refreshTokenExp: expect.any(Number)
+        tokenData: {
+          token: expect.any(String),
+          refreshToken: expect.any(String),
+          tokenExp: expect.any(Number),
+          refreshTokenExp: expect.any(Number)
+        },
+        userData: {
+          id: expect.any(String),
+          name: expect.any(String),
+          email: expect.any(String)
+        }
       }
     });
 
@@ -208,9 +268,9 @@ describe("User", () => {
       }
     `;
 
-    const responseRefresh = await request.mutate({
+    const responseRefresh = await getGraphqlClient().mutate({
       mutation: refreshToken,
-      variables: {tokenR: responseR.data.registartionUser.refreshToken}
+      variables: {tokenR: responseR.data.registartionUser.tokenData.refreshToken}
     });
 
     expect(responseRefresh.data).toEqual({
