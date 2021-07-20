@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 import {CliCore} from "@tsed/cli-core";
-import {config} from "../config"; // Import your application configuration
-import {PermissionComand} from "./PermissionComand";
 import "@tsed/typeorm";
+import {config} from "../config";
+import {PermissionComand} from "./PermissionComand";
 import { UserComand } from "./UserCommand";
 
 CliCore.bootstrap({

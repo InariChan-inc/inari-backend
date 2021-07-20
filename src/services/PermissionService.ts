@@ -14,7 +14,6 @@ export class PermissionService {
   }
 
   async findOne(params: any) {
-    //return false;
    return this.permissionRepository.findOne(params);
   }
 }

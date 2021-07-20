@@ -2,10 +2,8 @@ import {join} from "path";
 import {customAuthChecker} from "@root/graphql/AuthChecker";
 import {UserResolve} from "@root/graphql/resolves/UserResolve";
 import {loggerConfig} from "./logger";
-import typeormConfig from "./typeorm";
 import {AnimeResolve} from "@root/graphql/resolves/AnimeResolve";
 import "@tsed/typeorm";
-import {JWTMidlleware} from "../midlleware/JWTMidlleware";
 
 var db: any;
 if (process.env.NODE_ENV == "test") {
