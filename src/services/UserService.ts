@@ -5,7 +5,7 @@ import {UserInput} from "../inputs/User/UserInput";
 import {UserLoginInput} from "../inputs/User/UserLoginInput";
 import {UserRepository} from "@root/repositories/UserRepository";
 import {Passwordhelper} from "@root/helpers/PasswordHelper";
-import {FindConditions} from "typeorm";
+import {FindConditions, FindOneOptions} from "typeorm";
 import {QueryDeepPartialEntity} from "typeorm/query-builder/QueryPartialEntity";
 import {JWThelper} from "@root/helpers/JWTHelpers";
 import {Token} from "@root/entity/Token";
@@ -59,8 +59,8 @@ export class UserService {
     return this.userRepository.findOne({id: userId});
   }
 
-  async findOne(userInputLogin: UserLoginInput | any): Promise<User | undefined> {
-    return await this.userRepository.findOne(userInputLogin);
+  async findOne(userInputLogin: UserLoginInput | any, options?: FindOneOptions<User>): Promise<User | undefined> {
+    return await this.userRepository.findOne(userInputLogin, options);
   }
 
   async findAll() {

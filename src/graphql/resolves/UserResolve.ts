@@ -27,7 +27,7 @@ export class UserResolve {
   //   return this.userService.findAll();
   // }
 
-  //@Authorized()
+  @Authorized()
   @Query((returns) => UserData)
   async userProfile(@Ctx() ctx: TContext) {
     const user = await this.userService.findById(ctx.user!.id);

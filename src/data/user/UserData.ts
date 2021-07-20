@@ -16,6 +16,8 @@ export class UserData {
 
   @Field(() => ThemeEnum)
   theme: ThemeEnum;
+  
+  
 
   static loadFromEntity(user: User) {
     let userData = new UserData();

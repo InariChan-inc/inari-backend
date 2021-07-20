@@ -1,6 +1,6 @@
 import {MaxLength} from "class-validator";
 import {Field, ID, ObjectType} from "type-graphql";
-import {Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, Unique} from "typeorm";
+import {Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, Unique} from "typeorm";
 import {Team} from "../Team/Team";
 import {Roles} from "./Roles";
 
@@ -38,6 +38,7 @@ export class User {
   passwordHash: string;
 
   @ManyToOne(() => Roles)
+  @JoinColumn()
   role: Roles;
 
   @ManyToMany(() => Team)

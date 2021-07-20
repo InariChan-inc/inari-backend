@@ -21,7 +21,7 @@ export class JWTMidlleware {
         let user: User = await new Promise(async (resolve, reject) => {
           jwt.verify(token, process.env.TOKEN_SECRET ?? "Secret", async (err: any, user: any) => {
             if (err) return reject(err.message);
-            user = await this.userService.findOne(user.sub);
+            user = await this.userService.findOne(user.sub, {relations: ["role"]});
 
             return resolve(user);
           });
@@ -29,7 +29,7 @@ export class JWTMidlleware {
         req.user = user;
       }
     }
-    
+
     return next();
   }
 }
