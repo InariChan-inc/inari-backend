@@ -32,10 +32,6 @@ export class UserResolve {
   async userProfile(@Ctx() ctx: TContext) {
     const user = await this.userService.findById(ctx.user!.id);
 
-    if (user === undefined) {
-      throw new NotFound("user not found");
-    }
-
     return user;
   }
 

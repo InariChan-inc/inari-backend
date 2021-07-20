@@ -1,6 +1,7 @@
-import { ThemeEnum, User } from "@root/entity/User/User";
+import {ThemeEnum, User} from "@root/entity/User/User";
 import {MaxLength} from "class-validator";
 import {Field, ID, ObjectType} from "type-graphql";
+import {RoleData} from "./RoleData";
 
 @ObjectType()
 export class UserData {
@@ -16,8 +17,9 @@ export class UserData {
 
   @Field(() => ThemeEnum)
   theme: ThemeEnum;
-  
-  
+
+  @Field(() => RoleData, {nullable: true})
+  roleData?: RoleData;
 
   static loadFromEntity(user: User) {
     let userData = new UserData();
@@ -25,6 +27,8 @@ export class UserData {
     userData.name = user.name;
     userData.email = user.email;
     userData.theme = user.theme;
+
+    userData.roleData = user.role ? RoleData.loadFromEntity(user.role) : undefined;
 
     return userData;
   }

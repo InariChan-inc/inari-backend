@@ -9,6 +9,8 @@ import {FindConditions, FindOneOptions} from "typeorm";
 import {QueryDeepPartialEntity} from "typeorm/query-builder/QueryPartialEntity";
 import {JWThelper} from "@root/helpers/JWTHelpers";
 import {Token} from "@root/entity/Token";
+import {UserData} from "../data/user/UserData";
+import {NotFound} from "@tsed/exceptions";
 @Service()
 export class UserService {
   @Inject()
@@ -56,7 +58,13 @@ export class UserService {
   }
 
   async findById(userId: number) {
-    return this.userRepository.findOne({id: userId});
+    let user = await this.userRepository.findOne({id: userId}, {relations: ["role"]});
+
+    if (user === undefined) {
+      throw new NotFound("user not found");
+    }
+
+    return UserData.loadFromEntity(user);
   }
 
   async findOne(userInputLogin: UserLoginInput | any, options?: FindOneOptions<User>): Promise<User | undefined> {
