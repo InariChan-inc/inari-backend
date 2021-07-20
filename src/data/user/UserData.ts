@@ -21,12 +21,17 @@ export class UserData {
   @Field(() => RoleData, {nullable: true})
   roleData?: RoleData;
 
+  tokenRefresh?: string;
+  passwordHash: string;
+
   static loadFromEntity(user: User) {
     let userData = new UserData();
     userData.id = user.id;
     userData.name = user.name;
     userData.email = user.email;
     userData.theme = user.theme;
+    userData.tokenRefresh = user.tokenRefresh;
+    userData.passwordHash = user.passwordHash;
 
     userData.roleData = user.role ? RoleData.loadFromEntity(user.role) : undefined;
 

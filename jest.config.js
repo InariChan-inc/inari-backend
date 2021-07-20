@@ -43,6 +43,10 @@ module.exports = {
   // The test environment that will be used for testing
   testEnvironment: 'node',
 
+  moduleNameMapper: {
+    "^@root(.*)$": "<rootDir>/src$1",
+  },
+
   // The glob patterns Jest uses to detect test files
   testMatch: [
     '**/src/**/__tests__/**/*.[jt]s?(x)',

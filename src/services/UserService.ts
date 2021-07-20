@@ -25,7 +25,7 @@ export class UserService {
     return null;
   }
 
-  async validateRefreshToken(tokenRefresh: string): Promise<User | null> {
+  async validateRefreshToken(tokenRefresh: string): Promise<UserData | null> {
     let userId = await JWThelper.verifyRefreshToken(tokenRefresh);
     let user = await this.findById(userId);
 
@@ -36,7 +36,7 @@ export class UserService {
     return null;
   }
 
-  async createNewToken(user: User): Promise<Token> {
+  async createNewToken(user: UserData): Promise<Token> {
     let [tokenRefresh, tokenRefreshExp] = JWThelper.createTokenRefresh(user);
     let [token, tokenExp] = JWThelper.createToken(user);
     await this.updateById({id: user.id}, {tokenRefresh});

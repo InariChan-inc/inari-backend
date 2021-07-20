@@ -2,6 +2,7 @@
 import { $log } from "@tsed/common";
 import { PlatformExpress } from "@tsed/platform-express";
 import { Server } from "./Server";
+import 'reflect-metadata';
 
 async function bootstrap() {
   try {

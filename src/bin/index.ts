@@ -3,13 +3,12 @@ import {CliCore} from "@tsed/cli-core";
 import "@tsed/typeorm";
 import {config} from "../config";
 import {PermissionComand} from "./PermissionComand";
-import { UserComand } from "./UserCommand";
+import {RolesComand} from "./RolesComand";
+import {UserComand} from "./UserCommand";
+import 'reflect-metadata';
 
 CliCore.bootstrap({
   ...config,
   // add your custom commands here
-  commands: [
-    PermissionComand,
-    UserComand
-  ]
+  commands: [PermissionComand, UserComand, RolesComand]
 }).catch(console.error);
