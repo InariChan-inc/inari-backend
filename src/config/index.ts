@@ -4,6 +4,7 @@ import {UserResolve} from "@root/graphql/resolves/UserResolve";
 import {loggerConfig} from "./logger";
 import {AnimeResolve} from "@root/graphql/resolves/AnimeResolve";
 import "@tsed/typeorm";
+import {ImageResolve} from "../graphql/resolves/ImageResolve";
 
 var db: any;
 if (process.env.NODE_ENV == "test") {
@@ -54,6 +55,7 @@ export const config: Partial<TsED.Configuration> = {
   typegraphql: {
     default: {
       path: "/graphql",
+      uploads: false,
       context: ({req}) => {
         const context = {
           req,
@@ -62,7 +64,7 @@ export const config: Partial<TsED.Configuration> = {
         return context;
       },
       buildSchemaOptions: {
-        resolvers: [UserResolve, AnimeResolve],
+        resolvers: [UserResolve, AnimeResolve, ImageResolve],
         authChecker: customAuthChecker
       }
     }

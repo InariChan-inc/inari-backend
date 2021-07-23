@@ -9,8 +9,9 @@ import cors from "cors";
 import "@tsed/ajv";
 import "@tsed/typeorm";
 import {config, rootDir} from "./config";
-import { useContainer } from "class-validator";
-import { JWTMidlleware } from "./midlleware/JWTMidlleware";
+import {useContainer} from "class-validator";
+import {JWTMidlleware} from "./midlleware/JWTMidlleware";
+import {graphqlUploadExpress} from "graphql-upload";
 
 @Configuration({
   ...config,
@@ -18,19 +19,15 @@ import { JWTMidlleware } from "./midlleware/JWTMidlleware";
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
   mount: {
-    "/rest": [
-      `${rootDir}/controllers/**/*.ts`
-    ]
+    "/rest": [`${rootDir}/controllers/**/*.ts`]
   },
-  "componentsScan": [
+  componentsScan: [
     "${rootDir}/middleware/**/*.ts",
     "${rootDir}/services/**/*.ts",
     "${rootDir}/repositories/**/*.ts",
     "${rootDir}/validators/**/*.ts"
   ],
-  exclude: [
-    "**/*.spec.ts"
-  ]
+  exclude: ["**/*.spec.ts"]
 })
 export class Server {
   @Inject()
@@ -40,16 +37,25 @@ export class Server {
   settings: Configuration;
 
   $beforeRoutesInit(): void {
-    useContainer(this.app.injector, { fallback: true });
+    useContainer(this.app.injector, {fallback: true});
     this.app
+      //.use()
       .use(cors())
       .use(cookieParser())
       .use(compress({}))
       .use(methodOverride())
       .use(bodyParser.json())
-      .use(bodyParser.urlencoded({
-        extended: true
-      }))
-      .use(JWTMidlleware);
+      .use(
+        bodyParser.urlencoded({
+          extended: true
+        })
+      )
+      .use(JWTMidlleware)
+      .use("/graphql", graphqlUploadExpress({maxFileSize: 10000000, maxFiles: 10}));
   }
 }
+
+// curl localhost:8083/graphql \
+//   -F operations='{"query":"mutation($image: Upload!) { createImage(image: $image)}","variables":{"image":null}}' \
+//   -F map='{ "0": ["variables.image"] }' \
+//   -F 0=@test.srt
