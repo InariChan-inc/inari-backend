@@ -37,4 +37,5 @@ export class BanerService {
 
     return plainToClass(BanerData, baner);
   }
+  
 }

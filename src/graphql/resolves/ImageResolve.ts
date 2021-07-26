@@ -9,7 +9,7 @@ import {createWriteStream} from "fs";
 import {Upload} from "../../inputs/Image/Upload";
 import {ImageService} from "../../services/ImageService";
 import {ImageInput} from "../../inputs/Image/ImageInput";
-import { ImageData } from "../../data/file/ImageData";
+import {ImageData} from "../../data/file/ImageData";
 
 @ResolverService(Images)
 export class ImageResolve {
@@ -22,21 +22,11 @@ export class ImageResolve {
   @Mutation(() => ImageData)
   async createImage(
     @Arg("file", () => GraphQLUpload)
-    {createReadStream, filename}: Upload
+    upload: Upload,
+    @Arg("type") type: string
   ) {
     return new Promise(async (resolve, reject) =>
-      createReadStream()
-        .pipe(createWriteStream(__dirname + `/../../../resources/images/${filename}`))
-        .on("finish", () => {
-          let imageInput = new ImageInput();
-          imageInput.name = filename;
-          imageInput.path = `resources/images/${filename}`;
-          resolve(this.imageService.create(imageInput));
-        })
-        .on("error", (e) => {
-          console.log(e);
-          reject(false);
-        })
+      this.imageService.create(upload);
     );
   }
 }

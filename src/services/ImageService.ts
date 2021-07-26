@@ -7,6 +7,7 @@ import {UserInput} from "../inputs/User/UserInput";
 import {plainToClass} from "class-transformer";
 import { ImageInput } from "../inputs/Image/ImageInput";
 import { ImageData } from "../data/file/ImageData";
+import { Upload } from "@root/inputs/Image/Upload";
 
 @Service()
 export class ImageService {
@@ -14,7 +15,7 @@ export class ImageService {
   @UseConnection("default")
   private imageRepository: ImageRepository;
 
-  public async create(imageInput: ImageInput) {
+  public async create(upload: Upload) {
     return plainToClass(ImageData, await this.imageRepository.save(imageInput));
   }
 }
