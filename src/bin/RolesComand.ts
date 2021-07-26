@@ -37,7 +37,7 @@ export class RolesComand implements CommandProvider {
     {
       name: "root",
       key: "root",
-      permissions: ["userCreate", "userUpdate", "userDelete"]
+      permissions: ["userCreate", "userUpdate", "userDelete", "createBaner", "updateBaner", "deleteBaner"]
     }
   ];
 
@@ -50,10 +50,14 @@ export class RolesComand implements CommandProvider {
             let roleData = this.rolesData[index];
 
             let role = await this.RRoles.findOne({key: roleData.key});
+
             if (!role) {
               role = plainToClass(Roles, roleData);
               await this.RRoles.save(role);
+              return;
             }
+
+            await this.RRoles.update({id: role.id}, roleData);
             console.log(`done`);
           }
         }

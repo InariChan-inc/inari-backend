@@ -54,8 +54,3 @@ export class Server {
       .use("/graphql", graphqlUploadExpress({maxFileSize: 10000000, maxFiles: 10}));
   }
 }
-
-// curl localhost:8083/graphql \
-//   -F operations='{"query":"mutation($image: Upload!) { createImage(image: $image)}","variables":{"image":null}}' \
-//   -F map='{ "0": ["variables.image"] }' \
-//   -F 0=@test.srt
