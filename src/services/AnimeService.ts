@@ -1,8 +1,6 @@
 import { Inject, Service } from "@tsed/common";
 import { UseConnection } from "@tsed/typeorm";
-import { UserInput } from "../inputs/User/UserInput";
 import { AnimeRepository } from "@root/repositories/AnimeRepository";
-import { AnimeInput } from "@root/inputs/Anime/AnimeInput";
 import { Anime } from "@root/entity/Anime/Anime";
 import { AnimeData } from "@root/data/anime/AnimeData";
 import { NotFound } from "@tsed/exceptions";
