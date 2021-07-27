@@ -10,18 +10,14 @@ export enum ThemeEnum {
 }
 
 @Entity()
-@ObjectType()
 @Unique("my_unique_constraint", ["email"])
 export class User {
-  @Field(() => ID)
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Field(() => String)
   @Column()
   name: string;
 
-  @Field(() => String)
   @Column()
   @MaxLength(30)
   email: string;
@@ -29,12 +25,10 @@ export class User {
   @Column({default: ThemeEnum.LIGHT_THEME})
   theme: ThemeEnum;
 
-  @Field(() => String, {nullable: true})
   @Column({nullable: true})
   tokenRefresh?: string;
 
-  @Field(() => String)
-  @Column()
+  @Column({nullable: true})
   passwordHash: string;
 
   @ManyToOne(() => Roles)

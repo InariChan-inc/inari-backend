@@ -14,7 +14,6 @@ export class AnimeResolve {
     @Inject(AnimeService)
     private animeService: AnimeService
 
-    i
     createAnime(@Arg("data") animeInput: AnimeInput) {
         let anime = new Anime();
         anime.loadFromInput(animeInput);

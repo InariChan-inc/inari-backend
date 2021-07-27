@@ -1,8 +1,12 @@
-//require('module-alias/register')
-import { $log } from "@tsed/common";
-import { PlatformExpress } from "@tsed/platform-express";
-import { Server } from "./Server";
-import 'reflect-metadata';
+if (true) {
+  console.log("sf");
+  require("module-alias/register");
+}
+
+import {$log} from "@tsed/common";
+import {PlatformExpress} from "@tsed/platform-express";
+import {Server} from "./Server";
+import "reflect-metadata";
 
 async function bootstrap() {
   try {
@@ -17,5 +21,3 @@ async function bootstrap() {
 }
 
 bootstrap();
-
-

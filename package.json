@@ -1,4 +1,7 @@
 {
+  "_moduleAliases": {
+    "@root"      : "dist"
+  },
   "name": "inari",
   "version": "1.0.0",
   "description": "",
@@ -14,7 +17,7 @@
     "test:lint": "eslint src --ext .ts",
     "test:lint:fix": "eslint src --ext .ts --fix",
     "prettier": "prettier '{src,test}/**/*.ts' --write",
-    "typeorm": "tsed typeorm"
+    "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/.bin/typeorm"
   },
   "dependencies": {
     "@tsed/ajv": "6.59.7",

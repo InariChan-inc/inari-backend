@@ -41,7 +41,7 @@ export const config: Partial<TsED.Configuration> = {
       username: db.username,
       password: db.password,
       database: db.database,
-      synchronize: true,
+      synchronize: false,
       logging: false,
       entities: ["${rootDir}/entity/**/*.{js,ts}"],
       migrations: ["${rootDir}/migration/**/*.{js,ts}"],
