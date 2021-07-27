@@ -1,5 +1,8 @@
-import { Upload } from "@root/inputs/Image/Upload";
+import {Upload} from "@root/inputs/Image/Upload";
+import {ImageInput} from "../../inputs/Image/ImageInput";
 
 export interface ImageInterface {
-  load(upload: Upload): Promise<ImageData>;
+  saveFile(upload: Upload): Promise<ImageInput>;
+
+  existDirAndCreate(): Promise<boolean>;
 }

@@ -25,8 +25,6 @@ export class ImageResolve {
     upload: Upload,
     @Arg("type") type: string
   ) {
-    return new Promise(async (resolve, reject) =>
-      this.imageService.create(upload);
-    );
+    return this.imageService.create(upload, type);
   }
 }

@@ -37,5 +37,18 @@ export class BanerService {
 
     return plainToClass(BanerData, baner);
   }
-  
+
+  async all() {
+    let baners = await this.RBaner.find({relations: ["image"]});
+    return baners.map((baner) => plainToClass(BanerData, baner));
+  }
+
+  async delete(id: number) {
+    let deleteResult = await this.RBaner.delete({id});
+    if (deleteResult.affected! >= 1) {
+      return true;
+    }
+
+    return false;
+  }
 }

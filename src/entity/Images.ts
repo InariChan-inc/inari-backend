@@ -1,22 +1,23 @@
-import { Field, ID, ObjectType } from "type-graphql";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {Field, ID, ObjectType} from "type-graphql";
+import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {ImageTypeEnum} from "../inputs/Image/ImageInput";
+import {StatusAnimeEnum} from "./Anime/Anime";
 
 @Entity()
-@ObjectType()
 export class Images {
-    @Field(() => ID)
-    @PrimaryGeneratedColumn()
-    id: number
+  @Field(() => ID)
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Field(() => String)
-    @Column()
-    name: string
+  @Column()
+  name: string;
 
-    @Field(() => String)
-    @Column()
-    path: string
+  @Column()
+  type: number;
 
-    @Field(() => Boolean)
-    @Column()
-    isTmp: boolean
+  @Column()
+  path: string;
+
+  @Column()
+  isTmp: boolean;
 }

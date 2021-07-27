@@ -15,8 +15,20 @@ export class BanerResolve {
     return this.SBaner.create(BanerInput);
   }
 
+  @Mutation(() => Boolean)
+  deleteBaner(@Arg("id") id: number) {
+    return this.SBaner.delete(id);
+  }
+
   @Query(() => BanerData)
-  viewBaner(@Arg("id") id: number) {
+  baner(@Arg("id") id: number) {
     return this.SBaner.view(id);
   }
+
+  @Query(() => [BanerData])
+  baners() {
+    return this.SBaner.all();
+  }
+
+
 }

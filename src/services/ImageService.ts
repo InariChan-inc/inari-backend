@@ -5,9 +5,11 @@ import {Permission} from "@root/entity/User/Permission";
 import {ImageRepository} from "../repositories/ImageRepository";
 import {UserInput} from "../inputs/User/UserInput";
 import {plainToClass} from "class-transformer";
-import { ImageInput } from "../inputs/Image/ImageInput";
-import { ImageData } from "../data/file/ImageData";
-import { Upload } from "@root/inputs/Image/Upload";
+import {ImageInput} from "../inputs/Image/ImageInput";
+import {ImageData} from "../data/file/ImageData";
+import {Upload} from "@root/inputs/Image/Upload";
+import {ImageFactory} from "./images/ImageFactory";
+import {Images} from "../entity/Images";
 
 @Service()
 export class ImageService {
@@ -15,7 +17,11 @@ export class ImageService {
   @UseConnection("default")
   private imageRepository: ImageRepository;
 
-  public async create(upload: Upload) {
-    return plainToClass(ImageData, await this.imageRepository.save(imageInput));
+  public async create(upload: Upload, type: string) {
+    let imageFile = ImageFactory.createImage(type);
+    let imageInput = await imageFile.saveFile(upload);
+    let image = await this.imageRepository.save(plainToClass(Images, imageInput));
+
+    return plainToClass(ImageData, image);
   }
 }

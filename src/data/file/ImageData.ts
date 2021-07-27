@@ -1,4 +1,5 @@
 import {Field, ID, ObjectType} from "type-graphql";
+import { ImageTypeEnum } from "../../inputs/Image/ImageInput";
 
 @ObjectType()
 export class ImageData {
@@ -7,6 +8,9 @@ export class ImageData {
 
   @Field(() => String)
   name: string;
+
+  @Field(() => ImageTypeEnum)
+  type: ImageTypeEnum;
 
   @Field(() => String)
   path: string;
