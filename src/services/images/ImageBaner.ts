@@ -74,9 +74,9 @@ export class ImageBaner implements ImageInterface {
     return await new Promise<boolean>((res) => {
       gm.size({bufferStream: true}, (err, size) => {
         if (this.minWidth >= size.width && this.minHeight >= size.height) {
-          res(false);
+          res(true);
         }
-        res(true);
+        res(false);
       });
     });
   }
