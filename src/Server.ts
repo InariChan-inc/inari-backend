@@ -15,6 +15,13 @@ import {graphqlUploadExpress} from "graphql-upload";
 
 @Configuration({
   ...config,
+  statics: {
+    "/resources": [
+      {
+        root: `${rootDir}/../resources`
+      }
+    ]
+  },
   acceptMimes: ["application/json"],
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
