@@ -52,3 +52,4 @@ test/**/*.js.map
 /public
 /dist
 /resourses/images/*
+resources/images/baner/*

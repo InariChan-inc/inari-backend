@@ -8,7 +8,7 @@ export enum ImageTypeEnum {
 
 registerEnumType(ImageTypeEnum, {
   name: "ImageTypeEnum",
-  description: "Виберіть призначення зображення",
+  description: "Виберіть призначення зображення"
 });
 
 @ObjectType()
@@ -18,6 +18,9 @@ export class ImageInput {
 
   @Field(() => String)
   path: string;
+
+  @Field(() => String, {nullable: true})
+  pathReduced?: string;
 
   @Field(() => ImageTypeEnum)
   type: ImageTypeEnum;

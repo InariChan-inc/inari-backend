@@ -1,6 +1,6 @@
 {
   "_moduleAliases": {
-    "@root"      : "dist"
+    "@root": "dist"
   },
   "name": "inari",
   "version": "1.0.0",
@@ -37,6 +37,7 @@
     "apollo-datasource-rest": "^0.10.0",
     "apollo-server-express": "^2.0.0",
     "bcrypt": "^5.0.1",
+    "bluebird": "^3.7.2",
     "body-parser": "^1.19.0",
     "class-transformer": "^0.4.0",
     "class-validator": "^0.13.1",
@@ -45,6 +46,7 @@
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",
     "dotenv": "^10.0.0",
+    "es6-promisify": "^7.0.0",
     "es6-shim": "^0.35.6",
     "express": "^4.17.1",
     "gm": "^1.23.1",

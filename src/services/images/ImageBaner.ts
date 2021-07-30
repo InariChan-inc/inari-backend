@@ -12,31 +12,16 @@ import {ImageInterface} from "./ImageInterface";
 import gm = require("gm");
 import {ValidationError} from "@tsed/common";
 import {createReadStream} from "node:fs";
+import {ImageValidate} from "./ImageValidate";
 export class ImageBaner implements ImageInterface {
   private path = "resources/images/baner";
-
-  private minHeight = 460;
-  private minWidth = 1660;
-  private maxFilesize = 1024 * 1000;
 
   async saveFile(upload: Upload): Promise<ImageInput> {
     if (!(await this.existDirAndCreate())) {
       throw new Error("error create mkdir");
     }
 
-    if (!this.isImage(upload.mimetype)) {
-      throw new ValidationError(`allow only image`);
-    }
-
-    let imageGm = gm(upload.createReadStream());
-
-    if (!(await this.filesize(upload))) {
-      throw new ValidationError(`maxFilesize: 1mbl`);
-    }
-
-    if (!(await this.validateSize(imageGm))) {
-      throw new ValidationError(`minWidth: ${this.minWidth}, minHeight: ${this.minHeight}`);
-    }
+    await new ImageValidate(upload, {filesize: 1024 * 1000, minHeight: 460, minWidth: 1660}).validate();
 
     return new Promise<ImageInput>(async (resolve, reject) => {
       upload
@@ -68,45 +53,5 @@ export class ImageBaner implements ImageInterface {
         res(false);
       });
     });
-  }
-
-  async validateSize(gm: gm.State) {
-    return await new Promise<boolean>((res) => {
-      gm.size({bufferStream: true}, (err, size) => {
-        console.log(err);
-        if (err) {
-          res(false);
-        }
-
-        if (this.minWidth >= size.width && this.minHeight >= size.height) {
-          res(true);
-        }
-        
-        res(false);
-      });
-    });
-  }
-
-  async filesize(upload: Upload) {
-    var uploadStream = upload.createReadStream();
-    let byteLength = 0;
-    return await new Promise<boolean>(async (res) => {
-      for await (const uploadChunk of uploadStream) {
-        byteLength += (uploadChunk as Buffer).byteLength;
-
-        if (byteLength > this.maxFilesize) {
-          res(false);
-        }
-      }
-      res(true);
-    });
-  }
-
-  isImage(minetype: string) {
-    if (["image/png", "image/jpeg"].includes(minetype)) {
-      return true;
-    }
-
-    return false;
   }
 }

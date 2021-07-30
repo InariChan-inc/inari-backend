@@ -4,5 +4,5 @@ import {ImageInput} from "../../inputs/Image/ImageInput";
 export interface ImageInterface {
   saveFile(upload: Upload): Promise<ImageInput>;
 
-  existDirAndCreate(): Promise<boolean>;
+  existDirAndCreate(path: string): Promise<boolean>;
 }
