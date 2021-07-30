@@ -35,6 +35,24 @@ export class UserResolve {
     return user;
   }
 
+  @Query(() => Boolean)
+  async validateEmail(@Arg("email") email: string) {
+    if (await this.userService.findOne({email})) {
+      return true;
+    }
+
+    return false;
+  }
+
+  @Query(() => Boolean)
+  async validateName(@Arg("name") name: string) {
+    if (await this.userService.findOne({name})) {
+      return true;
+    }
+
+    return false;
+  }
+
   @Authorized()
   @Mutation(() => Boolean)
   async changeUserTheme(@Arg("data") themeInput: ThemeInput, @Ctx() ctx: TContext) {
