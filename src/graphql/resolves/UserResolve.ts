@@ -36,7 +36,7 @@ export class UserResolve {
   }
 
   @Query(() => Boolean)
-  async validateEmail(@Arg("email") email: string) {
+  async existUserEmail(@Arg("email") email: string) {
     if (await this.userService.findOne({email})) {
       return true;
     }
@@ -45,7 +45,7 @@ export class UserResolve {
   }
 
   @Query(() => Boolean)
-  async validateName(@Arg("name") name: string) {
+  async existUserName(@Arg("name") name: string) {
     if (await this.userService.findOne({name})) {
       return true;
     }
