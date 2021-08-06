@@ -18,7 +18,7 @@ export class ImagePoster implements ImageInterface {
     await new ImageValidate(upload, {filesize: 1024 * 1000, minHeight: 400, minWidth: 600}).validate();
 
     return new Promise<ImageInput>(async (resolve, reject) => {
-      let fullPath = __dirname + `/../../../` + this.pathOriginal + "/" + upload.filename;
+      const fullPath = __dirname + `/../../../` + this.pathOriginal + "/" + upload.filename;
       upload
         .createReadStream()
         .pipe(createWriteStream(fullPath))
@@ -27,8 +27,8 @@ export class ImagePoster implements ImageInterface {
             new Promise<ImageInput>((res, rej) => {
               gm(fullPath)
                 .resize(500, 500)
-                .write(this.pathReduced + "/" + upload.filename, (err) => {
-                  let imageInput = new ImageInput();
+                .write(this.pathReduced + "/" + upload.filename, () => {
+                  const imageInput = new ImageInput();
                   imageInput.name = upload.filename;
                   imageInput.path = this.pathOriginal + "/" + upload.filename;
                   imageInput.pathReduced = this.pathReduced + "/" + upload.filename;

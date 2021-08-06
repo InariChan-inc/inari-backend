@@ -1,11 +1,11 @@
-import { Inject, Service } from "@tsed/common";
-import { UseConnection } from "@tsed/typeorm";
-import { AnimeRepository } from "@root/repositories/AnimeRepository";
-import { Anime } from "@root/entity/Anime/Anime";
-import { AnimeData } from "@root/data/anime/AnimeData";
-import { NotFound } from "@tsed/exceptions";
-import { Pageable } from "@root/data/pageable/Pageable";
-import { AnimePagination } from "@root/data/pageable/AnimePagination";
+import {Inject, Service} from "@tsed/common";
+import {UseConnection} from "@tsed/typeorm";
+import {AnimeRepository} from "@root/repositories/AnimeRepository";
+import {Anime} from "@root/entity/Anime/Anime";
+import {AnimeData} from "@root/data/anime/AnimeData";
+import {NotFound} from "@tsed/exceptions";
+import {Pageable} from "@root/data/pageable/Pageable";
+import {AnimePagination} from "@root/data/pageable/AnimePagination";
 @Service()
 export class AnimeService {
   @Inject()
@@ -17,7 +17,7 @@ export class AnimeService {
   }
 
   async findById(id: number): Promise<AnimeData> {
-    let anime = await this.animeRepository.findOne(id);
+    const anime = await this.animeRepository.findOne(id);
 
     if (anime === undefined) {
       throw new NotFound("anime not found");
@@ -27,18 +27,17 @@ export class AnimeService {
   }
 
   async index(pageable: Pageable): Promise<AnimePagination> {
-    let animes = await this.animeRepository.find({
+    const animes = await this.animeRepository.find({
       skip: pageable.page * pageable.size,
       take: pageable.size
     });
 
-    let animesData: AnimeData[] = [];
+    const animesData: AnimeData[] = [];
 
-    for (var [key, anime] of Object.entries(animes)) {
+    for (const [key, anime] of Object.entries(animes)) {
       animesData.push(AnimeData.loadFromEntity(anime));
     }
 
-    return new AnimePagination({ data: animesData, total: await this.animeRepository.count(), pageable });
+    return new AnimePagination({data: animesData, total: await this.animeRepository.count(), pageable});
   }
-
 }

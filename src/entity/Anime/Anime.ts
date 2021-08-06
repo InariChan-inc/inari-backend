@@ -1,115 +1,127 @@
-import { AnimeInput } from "@root/inputs/Anime/AnimeInput";
-import { Field, ID, ObjectType } from "type-graphql";
-import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import { Images } from "../Images";
-import { Genre } from "../Genre/Genre";
-import { Team } from "../Team/Team";
-import { User } from "../User/User";
-import { AnimeToTeam } from "./AnimeToTeam";
-import { Episode } from "./Episode";
+import {AnimeInput} from "@root/inputs/Anime/AnimeInput";
+import {Field, ID, ObjectType} from "type-graphql";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn
+} from "typeorm";
+import {Images} from "../Images";
+import {Genre} from "../Genre/Genre";
+import {Team} from "../Team/Team";
+import {User} from "../User/User";
+import {AnimeToTeam} from "./AnimeToTeam";
+import {Episode} from "./Episode";
 
 export enum FormatAnimeEnum {
-    TV,
-    FILM,
-    ONA,
-    OVA,
-    SPLESH
+  TV,
+  FILM,
+  ONA,
+  OVA,
+  SPLESH
 }
 
 export enum SeasonAnimeEnum {
-    SUMMER,
-    FALL,
-    SPRING,
-    WINTER,
-    NO_SEASON
+  SUMMER,
+  FALL,
+  SPRING,
+  WINTER,
+  NO_SEASON
 }
 
 export enum StatusAnimeEnum {
-    NEW,
-    ONGOING,
-    COMPLETED
+  NEW,
+  ONGOING,
+  COMPLETED
 }
 
 @Entity()
 @ObjectType()
 export class Anime {
-    @Field(() => ID)
-    @PrimaryGeneratedColumn()
-    id: number
+  @Field(() => ID)
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Field()
-    @Column()
-    name: string
+  @Field()
+  @Column()
+  name: string;
 
-    @OneToOne(() => Images)
-    @JoinColumn()
-    poster: Images
+  @OneToOne(() => Images)
+  @JoinColumn()
+  poster: Images;
 
-    @Column("simple-json")
-    name_other: { ua: string, en?: string, ru?: string, jp?: string };
+  @Column("simple-json")
+  name_other: {ua: string; en?: string; ru?: string; jp?: string};
 
-    @Field()
-    @Column("text")
-    description: string
-    
-    @Field()
-    @Column()
-    current_count_episodes: number
+  @Field()
+  @Column("text")
+  description: string;
 
-    @Field()
-    @Column()
-    count_episodes: number
+  @Field()
+  @Column()
+  current_count_episodes: number;
 
-    @OneToMany(() => Genre, genre => genre.animes)
-    public genres: Genre[]
+  @Field()
+  @Column()
+  count_episodes: number;
 
-    @OneToOne(() => User)
-    @JoinColumn({ name: "user_created_id" })
-    user: User
+  @OneToMany(() => Genre, (genre) => genre.animes)
+  public genres: Genre[];
 
-    @OneToMany(() => AnimeToTeam, animeToTeam => animeToTeam.team)
-    public animeToTeams!: AnimeToTeam[];
+  @OneToOne(() => User)
+  @JoinColumn({name: "user_created_id"})
+  user: User;
 
-    @Field()
-    @Column()
-    duration: number
+  @OneToMany(() => AnimeToTeam, (animeToTeam) => animeToTeam.team)
+  public animeToTeams!: AnimeToTeam[];
 
-    @Field(() => FormatAnimeEnum)
-    @Column()
-    format: FormatAnimeEnum
+  @Field()
+  @Column()
+  duration: number;
 
-    @Field(() => SeasonAnimeEnum)
-    @Column()
-    season: SeasonAnimeEnum
+  @Field(() => FormatAnimeEnum)
+  @Column()
+  format: FormatAnimeEnum;
 
-    @Field(() => StatusAnimeEnum)
-    @Column()
-    status: StatusAnimeEnum
+  @Field(() => SeasonAnimeEnum)
+  @Column()
+  season: SeasonAnimeEnum;
 
-    @Field(() => Date)
-    @Column()
-    date_release: Date
+  @Field(() => StatusAnimeEnum)
+  @Column()
+  status: StatusAnimeEnum;
 
-    @Field(() => Date, { nullable: true })
-    @Column({ nullable: true })
-    date_end?: Date
+  @Field(() => Date)
+  @Column()
+  date_release: Date;
 
-    @CreateDateColumn()
-    created_at: Date
+  @Field(() => Date, {nullable: true})
+  @Column({nullable: true})
+  date_end?: Date;
 
-    @UpdateDateColumn()
-    update_at: Date
+  @CreateDateColumn()
+  created_at: Date;
 
-    loadFromInput(animeInput: AnimeInput){
-        this.description = animeInput.description;
-        this.name = animeInput.name.ua;
-        this.name_other = animeInput.name;
-        this.current_count_episodes = animeInput.count_episodes;
-        this.count_episodes = animeInput.count_episodes
-        this.duration = animeInput.duration
-        this.season = animeInput.season
-        this.status = animeInput.status
-        this.format = animeInput.format
-        this.date_release = animeInput.date_release
-    }
+  @UpdateDateColumn()
+  update_at: Date;
+
+  loadFromInput(animeInput: AnimeInput) {
+    this.description = animeInput.description;
+    this.name = animeInput.name.ua;
+    this.name_other = animeInput.name;
+    this.current_count_episodes = animeInput.count_episodes;
+    this.count_episodes = animeInput.count_episodes;
+    this.duration = animeInput.duration;
+    this.season = animeInput.season;
+    this.status = animeInput.status;
+    this.format = animeInput.format;
+    this.date_release = animeInput.date_release;
+  }
 }

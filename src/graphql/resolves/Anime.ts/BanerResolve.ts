@@ -29,6 +29,4 @@ export class BanerResolve {
   baners() {
     return this.SBaner.all();
   }
-
-
 }

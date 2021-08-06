@@ -5,7 +5,7 @@ import {config} from "../config";
 import {PermissionComand} from "./PermissionComand";
 import {RolesComand} from "./RolesComand";
 import {UserComand} from "./UserCommand";
-import 'reflect-metadata';
+import "reflect-metadata";
 
 CliCore.bootstrap({
   ...config,

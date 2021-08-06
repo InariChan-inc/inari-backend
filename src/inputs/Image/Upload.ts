@@ -1,5 +1,5 @@
 import {InputType, Field, ID, ObjectType} from "type-graphql";
-import { ReadStream } from "fs";
+import {ReadStream} from "fs";
 
 //@ObjectType()
 export class Upload {

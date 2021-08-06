@@ -5,9 +5,10 @@ import {loggerConfig} from "./logger";
 import {AnimeResolve} from "@root/graphql/resolves/AnimeResolve";
 import "@tsed/typeorm";
 import {ImageResolve} from "../graphql/resolves/ImageResolve";
-import { BanerResolve } from "@root/graphql/resolves/Anime.ts/BanerResolve";
+import {BanerResolve} from "@root/graphql/resolves/Anime.ts/BanerResolve";
+import {AvatarResolve} from "@root/graphql/resolves/AvatarResolve";
 
-var db: any;
+let db: any;
 if (process.env.NODE_ENV == "test") {
   db = {
     host: "localhost",
@@ -65,7 +66,7 @@ export const config: Partial<TsED.Configuration> = {
         return context;
       },
       buildSchemaOptions: {
-        resolvers: [UserResolve, AnimeResolve, ImageResolve, BanerResolve],
+        resolvers: [UserResolve, AnimeResolve, ImageResolve, BanerResolve, AvatarResolve],
         authChecker: customAuthChecker
       }
     }

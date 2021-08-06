@@ -28,7 +28,7 @@ export class ImageBaner implements ImageInterface {
         .createReadStream()
         .pipe(createWriteStream(__dirname + `/../../../` + this.path + "/" + upload.filename))
         .on("finish", async () => {
-          let imageInput = new ImageInput();
+          const imageInput = new ImageInput();
           imageInput.name = upload.filename;
           imageInput.path = this.path + "/" + upload.filename;
           imageInput.type = ImageTypeEnum.BANER;

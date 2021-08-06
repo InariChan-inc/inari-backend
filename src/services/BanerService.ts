@@ -17,8 +17,8 @@ export class BanerService {
   RImage: ImageRepository;
 
   async create(BanerInput: BanerInput): Promise<BanerData> {
-    let image = await this.RImage!.findOne(BanerInput.image_id);
-    let baner = new Baner();
+    const image = await this.RImage!.findOne(BanerInput.image_id);
+    const baner = new Baner();
     baner.name = BanerInput.name;
     baner.image = image as Images;
 
@@ -29,7 +29,7 @@ export class BanerService {
   }
 
   async view(id: number): Promise<BanerData> {
-    let baner = await this.RBaner.findOne(id, {relations: ["image"]});
+    const baner = await this.RBaner.findOne(id, {relations: ["image"]});
 
     if (baner === undefined) {
       throw new NotFound("baner not found");
@@ -39,12 +39,12 @@ export class BanerService {
   }
 
   async all() {
-    let baners = await this.RBaner.find({relations: ["image"]});
+    const baners = await this.RBaner.find({relations: ["image"]});
     return baners.map((baner) => plainToClass(BanerData, baner));
   }
 
   async delete(id: number) {
-    let deleteResult = await this.RBaner.delete({id});
+    const deleteResult = await this.RBaner.delete({id});
     if (deleteResult.affected! >= 1) {
       return true;
     }

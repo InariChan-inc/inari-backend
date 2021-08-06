@@ -20,11 +20,11 @@ export class ImageInput {
   path: string;
 
   @Field(() => String, {nullable: true})
-  pathReduced?: string;
+  pathResized?: string;
 
   @Field(() => ImageTypeEnum)
   type: ImageTypeEnum;
 
   @Field(() => Boolean, {defaultValue: false})
-  isTmp: boolean = false;
+  isTmp = false;
 }

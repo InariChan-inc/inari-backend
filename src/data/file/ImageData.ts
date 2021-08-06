@@ -1,5 +1,5 @@
 import {Field, ID, ObjectType} from "type-graphql";
-import { ImageTypeEnum } from "../../inputs/Image/ImageInput";
+import {ImageTypeEnum} from "../../inputs/Image/ImageInput";
 
 @ObjectType()
 export class ImageData {
@@ -15,6 +15,9 @@ export class ImageData {
   @Field(() => String)
   path: string;
 
+  @Field(() => String, {nullable: true})
+  pathResized?: string;
+
   @Field(() => Boolean, {defaultValue: false})
-  isTmp: boolean = false;
+  isTmp = false;
 }

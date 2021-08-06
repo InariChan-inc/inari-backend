@@ -1,6 +1,8 @@
 import {ThemeEnum, User} from "@root/entity/User/User";
+import {plainToClass} from "class-transformer";
 import {MaxLength} from "class-validator";
 import {Field, ID, ObjectType} from "type-graphql";
+import {ImageData} from "../file/ImageData";
 import {RoleData} from "./RoleData";
 
 @ObjectType()
@@ -18,6 +20,9 @@ export class UserData {
   @Field(() => ThemeEnum)
   theme: ThemeEnum;
 
+  @Field(() => ImageData, {nullable: true})
+  avatar?: ImageData;
+
   @Field(() => RoleData, {nullable: true})
   roleData?: RoleData;
 
@@ -25,7 +30,7 @@ export class UserData {
   passwordHash: string;
 
   static loadFromEntity(user: User) {
-    let userData = new UserData();
+    const userData = new UserData();
     userData.id = user.id;
     userData.name = user.name;
     userData.email = user.email;
@@ -34,6 +39,7 @@ export class UserData {
     userData.passwordHash = user.passwordHash;
 
     userData.roleData = user.role ? RoleData.loadFromEntity(user.role) : undefined;
+    userData.avatar = user.avatar ? plainToClass(ImageData, user.avatar) : undefined;
 
     return userData;
   }

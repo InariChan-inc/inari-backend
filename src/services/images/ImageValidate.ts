@@ -35,7 +35,7 @@ export class ImageValidate {
   }
 
   private async validateSize() {
-    let imageGm = gm(this.upload.createReadStream());
+    const imageGm = gm(this.upload.createReadStream());
 
     return await new Promise<boolean>((res) => {
       imageGm.size({bufferStream: true}, (err, size) => {
@@ -54,7 +54,7 @@ export class ImageValidate {
   }
 
   private async filesize() {
-    var uploadStream = this.upload.createReadStream();
+    const uploadStream = this.upload.createReadStream();
     let byteLength = 0;
     return await new Promise<boolean>(async (res) => {
       for await (const uploadChunk of uploadStream) {

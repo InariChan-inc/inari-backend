@@ -4,7 +4,7 @@ import {Field, InputType} from "type-graphql";
 export class BanerInput {
   @Field()
   name: string;
-  
+
   @Field()
   image_id: number;
 }

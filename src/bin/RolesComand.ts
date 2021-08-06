@@ -46,8 +46,8 @@ export class RolesComand implements CommandProvider {
       {
         title: "Ініцілізаці ролей",
         task: async () => {
-          for (let index in this.rolesData) {
-            let roleData = this.rolesData[index];
+          for (const index in this.rolesData) {
+            const roleData = this.rolesData[index];
 
             let role = await this.RRoles.findOne({key: roleData.key});
 

@@ -62,7 +62,7 @@ const changeUserTheme = gql`
 `;
 
 function getGraphqlClient(user?: User) {
-  let server = PlatformTest.get<ApolloService>(ApolloService).get("typegraphql-default")!;
+  const server = PlatformTest.get<ApolloService>(ApolloService).get("typegraphql-default")!;
 
   if (user) {
     server.requestOptions.context = {

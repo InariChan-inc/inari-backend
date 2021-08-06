@@ -1,5 +1,5 @@
-import { ClassType, Field, Int, ObjectType } from "type-graphql";
-import { Pageable } from "./Pageable";
+import {ClassType, Field, Int, ObjectType} from "type-graphql";
+import {Pageable} from "./Pageable";
 
 export interface IPaginatedResponse {
   data: any;
@@ -9,14 +9,14 @@ export interface IPaginatedResponse {
 
 export default function PaginatedResponse<TItem>(TItemClass: ClassType<TItem>) {
   // `isAbstract` decorator option is mandatory to prevent registering in schema
-  @ObjectType({ isAbstract: true })
+  @ObjectType({isAbstract: true})
   abstract class PaginatedResponseClass extends Pageable {
     // here we use the runtime argument
-    @Field(type => [TItemClass])
+    @Field((type) => [TItemClass])
     // and here the generic type
     data: TItem[];
 
-    @Field(type => Int)
+    @Field((type) => Int)
     total: number;
 
     @Field()

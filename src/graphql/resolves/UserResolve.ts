@@ -56,7 +56,7 @@ export class UserResolve {
   @Authorized()
   @Mutation(() => Boolean)
   async changeUserTheme(@Arg("data") themeInput: ThemeInput, @Ctx() ctx: TContext) {
-    let user = ctx.user as User;
+    const user = ctx.user as User;
     if (await this.userService.updateById({id: user.id}, {theme: themeInput.theme})) {
       return true;
     }
@@ -65,8 +65,8 @@ export class UserResolve {
   }
 
   @Mutation(() => UserWithTokenData)
-  async registartionUser(@Arg("data") userInput: UserInput) {
-    let user = await this.userService.create(userInput);
+  async registrationUser(@Arg("data") userInput: UserInput) {
+    const user = await this.userService.create(userInput);
     return {
       userData: UserData.loadFromEntity(user),
       tokenData: this.userService.createNewToken(user)
@@ -75,7 +75,7 @@ export class UserResolve {
 
   @Mutation(() => UserWithTokenData)
   async loginUser(@Arg("data") userLoginInput: UserLoginInput) {
-    let user = await this.userService.validateUser(userLoginInput);
+    const user = await this.userService.validateUser(userLoginInput);
 
     if (!user) {
       throw new AuthenticationError("Wrong credentials");
@@ -89,7 +89,7 @@ export class UserResolve {
 
   @Mutation(() => Token)
   async refreshToken(@Arg("tokenRefresh") tokenRefresh: string) {
-    let user = await this.userService.validateRefreshToken(tokenRefresh);
+    const user = await this.userService.validateRefreshToken(tokenRefresh);
 
     if (!user) {
       throw new AuthenticationError("Wrong refresh token");
