@@ -8,14 +8,14 @@ export class Pageable {
   @Default(0)
   @Description("Page number.")
   @Field()
-  page = 0;
+  page: number = 0;
 
   @Integer()
   @Min(1)
   @Default(5)
   @Description("Number of objects per page.")
   @Field()
-  size = 5;
+  size: number = 5;
 
   constructor(options: Partial<Pageable>) {
     options?.page && (this.page = options.page);
