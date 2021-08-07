@@ -1,6 +1,5 @@
 import {ThemeEnum, User} from "@root/entity/User/User";
 import {plainToClass} from "class-transformer";
-import {MaxLength} from "class-validator";
 import {Field, ID, ObjectType} from "type-graphql";
 import {ImageData} from "../file/ImageData";
 import {RoleData} from "./RoleData";
@@ -13,8 +12,10 @@ export class UserData {
   @Field(() => String)
   name: string;
 
+  @Field(() => String, {nullable: true})
+  aboutMe?: string;
+
   @Field(() => String)
-  @MaxLength(30)
   email: string;
 
   @Field(() => ThemeEnum)
@@ -34,6 +35,7 @@ export class UserData {
     userData.id = user.id;
     userData.name = user.name;
     userData.email = user.email;
+    userData.aboutMe = user.aboutMe;
     userData.theme = user.theme;
     userData.tokenRefresh = user.tokenRefresh;
     userData.passwordHash = user.passwordHash;

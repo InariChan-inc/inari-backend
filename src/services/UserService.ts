@@ -5,12 +5,15 @@ import {UserInput} from "../inputs/User/UserInput";
 import {UserLoginInput} from "../inputs/User/UserLoginInput";
 import {UserRepository} from "@root/repositories/UserRepository";
 import {Passwordhelper} from "@root/helpers/PasswordHelper";
-import {FindConditions, FindOneOptions} from "typeorm";
-import {QueryDeepPartialEntity} from "typeorm/query-builder/QueryPartialEntity";
+import {FindConditions, FindOneOptions, FindOperator} from "typeorm";
+import * as _ from "lodash";
 import {JWThelper} from "@root/helpers/JWTHelpers";
 import {Token} from "@root/entity/Token";
 import {UserData} from "../data/user/UserData";
 import {NotFound} from "@tsed/exceptions";
+import {plainToClass} from "class-transformer";
+import {UserUpdateInput} from "@root/inputs/User/UserUpdateInput";
+import {ValidationError} from "apollo-server-express";
 @Service()
 export class UserService {
   @Inject()
@@ -44,8 +47,22 @@ export class UserService {
     return new Token(token, tokenRefresh, tokenExp, tokenRefreshExp);
   }
 
-  async updateById(condition: FindConditions<User>, update: QueryDeepPartialEntity<User>) {
-    return this.userRepository.update(condition, update);
+  async updateById(condition: FindConditions<User>, userInput: Partial<UserUpdateInput>) {
+    const id = condition.id!;
+    const user = await this.findById(id);
+
+    if (userInput.passwordOld && !await Passwordhelper.checkPassword(userInput.passwordOld, user.passwordHash)) {
+      throw new ValidationError("Старий пароль не вірний");
+    }
+
+    let userUpdate = plainToClass(User, {
+      ...userInput,
+      passwordHash: userInput.passwordNew ? await Passwordhelper.createHash(userInput.passwordNew) : undefined
+    });
+
+    userUpdate = _.omit(userUpdate, ["passwordOld", "passwordNew"]) as User;
+
+    return this.userRepository.update(condition, _.pickBy(userUpdate));
   }
 
   async create(userInput: UserInput) {
@@ -57,7 +74,7 @@ export class UserService {
     return this.userRepository.save(user);
   }
 
-  async findById(userId: number) {
+  async findById(userId: number | FindOperator<number>) {
     const user = await this.userRepository.findOne({id: userId}, {relations: ["role", "avatar"]});
 
     if (user === undefined) {

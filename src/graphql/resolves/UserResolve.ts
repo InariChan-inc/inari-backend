@@ -1,21 +1,18 @@
 import {Inject} from "@tsed/di";
 import {ResolverService} from "@tsed/graphql";
 import {UserService} from "@root/services/UserService";
-import {Arg, Authorized, Ctx, Mutation, Query, registerEnumType, UseMiddleware} from "type-graphql";
-import {ThemeEnum, User} from "@root/entity/User/User";
+import {Arg, Authorized, Ctx, Mutation, Query} from "type-graphql";
 import {UserInput} from "@root/inputs/User/UserInput";
-import {NotFound} from "@tsed/exceptions";
 import {UserLoginInput} from "@root/inputs/User/UserLoginInput";
 import {Token} from "@root/entity/Token";
-import {JWTMidlleware} from "@root/midlleware/JWTMidlleware";
 import {TContext} from "@root/interface/Context";
-import {JWThelper} from "@root/helpers/JWTHelpers";
 import {AuthenticationError} from "apollo-server-express";
-import {TokenRefreshInput} from "@root/inputs/User/TokenRefreshInput";
 import {UserData} from "@root/data/user/UserData";
-import {boolean, number} from "@tsed/schema";
 import {ThemeInput} from "@root/inputs/User/ThemeInput";
 import {UserWithTokenData} from "../../data/user/UserWithTokenData";
+import {User} from "@root/entity/User/User";
+import {UserUpdateInput} from "@root/inputs/User/UserUpdateInput";
+import {BadRequest} from "@tsed/exceptions";
 
 @ResolverService(User)
 export class UserResolve {
@@ -29,10 +26,20 @@ export class UserResolve {
 
   @Authorized()
   @Query((returns) => UserData)
-  async userProfile(@Ctx() ctx: TContext) {
+  async profile(@Ctx() ctx: TContext) {
     const user = await this.userService.findById(ctx.user!.id);
 
     return user;
+  }
+
+  @Authorized()
+  @Mutation((returns) => Boolean)
+  async updateProfile(@Arg("data") data: UserUpdateInput, @Ctx() ctx: TContext) {
+    if ((await this.userService.updateById({id: ctx.user!.id}, data)).affected) {
+      return true;
+    }
+
+    return false;
   }
 
   @Query(() => Boolean)

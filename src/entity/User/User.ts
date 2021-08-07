@@ -1,5 +1,3 @@
-import {MaxLength} from "class-validator";
-import {Field, ID, ObjectType} from "type-graphql";
 import {Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, Unique} from "typeorm";
 import {Images} from "../Images";
 import {Team} from "../Team/Team";
@@ -19,8 +17,10 @@ export class User {
   @Column()
   name: string;
 
+  @Column({type: "text", nullable: true})
+  aboutMe?: string;
+
   @Column()
-  @MaxLength(30)
   email: string;
 
   @Column({default: ThemeEnum.LIGHT_THEME})
