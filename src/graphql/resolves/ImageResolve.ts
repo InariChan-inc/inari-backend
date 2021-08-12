@@ -43,4 +43,13 @@ export class ImageResolve {
   ) {
     return this.imageService.create(upload, ImageTypeEnum.AVATAR, ctx.user!.id.toString());
   }
+
+  @Authorized()
+  @Mutation(() => ImageData)
+  async uploadPoster(
+    @Arg("file", () => GraphQLUpload)
+    upload: Upload
+  ) {
+    return this.imageService.create(upload, ImageTypeEnum.AVATAR);
+  }
 }

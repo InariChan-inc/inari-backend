@@ -14,11 +14,9 @@ export class AnimeResolve {
   @Inject(AnimeService)
   private animeService: AnimeService;
 
+  @Mutation((returns) => AnimeData)
   createAnime(@Arg("data") animeInput: AnimeInput) {
-    const anime = new Anime();
-    anime.loadFromInput(animeInput);
-
-    return this.animeService.create(anime);
+    return this.animeService.create(animeInput);
   }
 
   @Query((returns) => AnimeData)
@@ -33,5 +31,15 @@ export class AnimeResolve {
     const anime = await this.animeService.index(pageable);
 
     return anime;
+  }
+
+  @Query((returns) => [AnimeData])
+  async lastUpdatedAnime(): Promise<AnimeData[]> {
+    return this.animeService.lastUpdatedAnime();
+  }
+
+  @Query((returns) => [AnimeData])
+  async lastAddedAnime(): Promise<AnimeData[]> {
+    return this.animeService.lastAddedAnime();
   }
 }

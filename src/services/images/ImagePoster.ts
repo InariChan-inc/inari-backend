@@ -3,22 +3,26 @@ import {Upload} from "@root/inputs/Image/Upload";
 import {createWriteStream, mkdirSync, stat} from "fs";
 import {ImageInterface} from "./ImageInterface";
 import {ImageValidate} from "./ImageValidate";
+import {v4 as uuidv4} from "uuid";
 
 import gm = require("gm");
 
 export class ImagePoster implements ImageInterface {
-  private pathOriginal = "resources/images/poster/original";
-  private pathReduced = "resources/images/poster/500x500";
+  private pathOriginal = "resources/images/poster/tpm/original";
+  private pathReduced = "resources/images/poster/tpm/500x500";
 
   async saveFile(upload: Upload): Promise<ImageInput> {
     if (!((await this.existDirAndCreate(this.pathOriginal)) && (await this.existDirAndCreate(this.pathReduced)))) {
       throw new Error("error create mkdir");
     }
 
+    const filename = uuidv4() + "." + upload.filename.substr(upload.filename.lastIndexOf(".") + 1);
+
     await new ImageValidate(upload, {filesize: 1024 * 1000, minHeight: 400, minWidth: 600}).validate();
 
     return new Promise<ImageInput>(async (resolve, reject) => {
-      const fullPath = __dirname + `/../../../` + this.pathOriginal + "/" + upload.filename;
+      const fullPath = __dirname + `/../../../` + this.pathOriginal + "/" + filename;
+
       upload
         .createReadStream()
         .pipe(createWriteStream(fullPath))
@@ -27,11 +31,11 @@ export class ImagePoster implements ImageInterface {
             new Promise<ImageInput>((res, rej) => {
               gm(fullPath)
                 .resize(500, 500)
-                .write(this.pathReduced + "/" + upload.filename, () => {
+                .write(this.pathReduced + "/" + filename, () => {
                   const imageInput = new ImageInput();
-                  imageInput.name = upload.filename;
-                  imageInput.path = this.pathOriginal + "/" + upload.filename;
-                  imageInput.pathResized = this.pathReduced + "/" + upload.filename;
+                  imageInput.name = filename;
+                  imageInput.path = this.pathOriginal + "/" + filename;
+                  imageInput.pathResized = this.pathReduced + "/" + filename;
                   imageInput.type = ImageTypeEnum.BANER;
                   res(imageInput);
                 });

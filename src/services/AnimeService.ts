@@ -6,13 +6,21 @@ import {AnimeData} from "@root/data/anime/AnimeData";
 import {NotFound} from "@tsed/exceptions";
 import {Pageable} from "@root/data/pageable/Pageable";
 import {AnimePagination} from "@root/data/pageable/AnimePagination";
+import {AnimeInput} from "@root/inputs/Anime/AnimeInput";
+import {plainToClass} from "class-transformer";
+import {ImageRepository} from "@root/repositories/ImageRepository";
 @Service()
 export class AnimeService {
   @Inject()
-  @UseConnection("default")
   animeRepository: AnimeRepository;
 
-  async create(anime: Anime) {
+  @Inject()
+  imageRepository: ImageRepository;
+
+  async create(animeInput: AnimeInput) {
+    const image = await this.imageRepository.findOne({id: animeInput.imageId}, {relations: ["poster"]});
+    const anime = plainToClass(Anime, {...animeInput, name: animeInput.name.ua, name_other: animeInput.name, poster: image});
+
     return this.animeRepository.save(anime);
   }
 
@@ -28,6 +36,7 @@ export class AnimeService {
 
   async index(pageable: Pageable): Promise<AnimePagination> {
     const animes = await this.animeRepository.find({
+      relations: ["poster"],
       skip: pageable.page * pageable.size,
       take: pageable.size
     });
@@ -39,5 +48,25 @@ export class AnimeService {
     }
 
     return new AnimePagination({data: animesData, total: await this.animeRepository.count(), pageable});
+  }
+
+  async lastUpdatedAnime(): Promise<AnimeData[]> {
+    const animes = await this.animeRepository.find({
+      relations: ["poster"],
+      order: {update_at: "DESC"},
+      take: 10
+    });
+
+    return animes.map((anime) => plainToClass(AnimeData, anime));
+  }
+
+  async lastAddedAnime(): Promise<AnimeData[]> {
+    const animes = await this.animeRepository.find({
+      relations: ["poster"],
+      order: {created_at: "DESC"},
+      take: 10
+    });
+
+    return animes.map((anime) => plainToClass(AnimeData, anime));
   }
 }

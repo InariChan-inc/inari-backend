@@ -1,19 +1,10 @@
 import {Anime, FormatAnimeEnum, SeasonAnimeEnum, StatusAnimeEnum} from "@root/entity/Anime/Anime";
-import {AnimeInput} from "@root/inputs/Anime/AnimeInput";
+import {plainToClass} from "class-transformer";
 import {Field, ID, ObjectType} from "type-graphql";
 import {
   Column,
-  CreateDateColumn,
-  Entity,
-  JoinColumn,
-  JoinTable,
-  ManyToMany,
-  ManyToOne,
-  OneToMany,
-  OneToOne,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn
 } from "typeorm";
+import { ImageData } from "../file/ImageData";
 // import { Images } from "@root/Images";
 // import { Janre } from "@root/Janre/Janre";
 // import { Team } from "@root/Team/Team";
@@ -29,9 +20,8 @@ export class AnimeData {
   @Field()
   name: string;
 
-  // @OneToOne(() => Images)
-  // @JoinColumn()
-  // poster: Images
+  @Field(() => ImageData)
+  poster: ImageData;
 
   @Column("simple-json")
   nameOther: {ua: string; en?: string; ru?: string; jp?: string};
@@ -92,6 +82,7 @@ export class AnimeData {
     animeData.status = anime.status;
     animeData.format = anime.format;
     animeData.dateRelease = anime.date_release;
+    animeData.poster = plainToClass(ImageData, anime.poster);
 
     return animeData;
   }

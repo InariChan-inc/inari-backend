@@ -1,24 +1,10 @@
-import {AnimeInput} from "@root/inputs/Anime/AnimeInput";
 import {Field, ID, ObjectType} from "type-graphql";
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  JoinColumn,
-  JoinTable,
-  ManyToMany,
-  ManyToOne,
-  OneToMany,
-  OneToOne,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn
-} from "typeorm";
+import {Column, CreateDateColumn, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn} from "typeorm";
 import {Images} from "../Images";
 import {Genre} from "../Genre/Genre";
-import {Team} from "../Team/Team";
 import {User} from "../User/User";
 import {AnimeToTeam} from "./AnimeToTeam";
-import {Episode} from "./Episode";
+import {Expose} from "class-transformer";
 
 export enum FormatAnimeEnum {
   TV,
@@ -46,82 +32,87 @@ export enum StatusAnimeEnum {
 @ObjectType()
 export class Anime {
   @Field(() => ID)
+  @Expose()
   @PrimaryGeneratedColumn()
   id: number;
 
   @Field()
+  @Expose()
   @Column()
   name: string;
 
+  @Expose()
   @OneToOne(() => Images)
   @JoinColumn()
   poster: Images;
 
+  @Expose()
   @Column("simple-json")
   name_other: {ua: string; en?: string; ru?: string; jp?: string};
 
+  @Expose()
   @Field()
   @Column("text")
   description: string;
 
+  @Expose()
   @Field()
   @Column()
   current_count_episodes: number;
 
+  @Expose()
   @Field()
   @Column()
   count_episodes: number;
 
+  @Expose()
   @OneToMany(() => Genre, (genre) => genre.animes)
   public genres: Genre[];
 
+  @Expose()
   @OneToOne(() => User)
   @JoinColumn({name: "user_created_id"})
   user: User;
 
+  @Expose()
   @OneToMany(() => AnimeToTeam, (animeToTeam) => animeToTeam.team)
   public animeToTeams!: AnimeToTeam[];
 
+  @Expose()
   @Field()
   @Column()
   duration: number;
 
+  @Expose()
   @Field(() => FormatAnimeEnum)
   @Column()
   format: FormatAnimeEnum;
 
+  @Expose()
   @Field(() => SeasonAnimeEnum)
   @Column()
   season: SeasonAnimeEnum;
 
+  @Expose()
   @Field(() => StatusAnimeEnum)
   @Column()
   status: StatusAnimeEnum;
 
+  @Expose()
   @Field(() => Date)
   @Column()
   date_release: Date;
 
+  @Expose()
   @Field(() => Date, {nullable: true})
   @Column({nullable: true})
   date_end?: Date;
 
+  @Expose()
   @CreateDateColumn()
   created_at: Date;
 
+  @Expose()
   @UpdateDateColumn()
   update_at: Date;
-
-  loadFromInput(animeInput: AnimeInput) {
-    this.description = animeInput.description;
-    this.name = animeInput.name.ua;
-    this.name_other = animeInput.name;
-    this.current_count_episodes = animeInput.count_episodes;
-    this.count_episodes = animeInput.count_episodes;
-    this.duration = animeInput.duration;
-    this.season = animeInput.season;
-    this.status = animeInput.status;
-    this.format = animeInput.format;
-    this.date_release = animeInput.date_release;
-  }
 }

@@ -52,5 +52,8 @@ export class AnimeInput {
   status: StatusAnimeEnum;
 
   @Field()
+  imageId: number;
+
+  @Field()
   date_release: Date;
 }
