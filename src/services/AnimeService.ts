@@ -18,7 +18,7 @@ export class AnimeService {
   imageRepository: ImageRepository;
 
   async create(animeInput: AnimeInput) {
-    const image = await this.imageRepository.findOne({id: animeInput.imageId}, {relations: ["poster"]});
+    const image = await this.imageRepository.findOne({id: animeInput.imageId});
     const anime = plainToClass(Anime, {...animeInput, name: animeInput.name.ua, name_other: animeInput.name, poster: image});
 
     return this.animeRepository.save(anime);
