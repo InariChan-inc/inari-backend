@@ -1,11 +1,10 @@
 export class PermissionAction {
+  key: string;
 
-    key: string
+  resolves: string[];
 
-    resolves: string[]
-
-    constructor(key: string, resolves: string[]) {
-        this.key = key;
-        this.resolves = resolves;
-    }
+  constructor(key: string, resolves: string[]) {
+    this.key = key;
+    this.resolves = resolves;
+  }
 }

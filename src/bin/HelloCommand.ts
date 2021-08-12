@@ -1,15 +1,12 @@
 import {Command, CommandProvider, QuestionOptions} from "@tsed/cli-core";
 
-export interface HelloCommandContext {
-}
+export interface HelloCommandContext {}
 
 @Command({
   name: "hello-command",
   description: "Command description",
-  args: {
-  },
-  options: {
-  },
+  args: {},
+  options: {},
   allowUnknownOption: false
 })
 export class HelloCommand implements CommandProvider {
@@ -37,7 +34,7 @@ export class HelloCommand implements CommandProvider {
       {
         title: "Do something",
         task: () => {
-          console.log('HELLO')
+          console.log("HELLO");
         }
       }
     ];

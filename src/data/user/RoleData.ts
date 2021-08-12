@@ -17,7 +17,7 @@ export class RoleData {
   permissions: string[];
 
   static loadFromEntity(role: Roles) {
-    let roleData = new RoleData();
+    const roleData = new RoleData();
     roleData.id = role.id;
     roleData.name = role.name;
     roleData.key = role.key;

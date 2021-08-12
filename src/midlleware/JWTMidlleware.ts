@@ -18,10 +18,10 @@ export class JWTMidlleware {
         const token = authHeader && authHeader.split(" ")[1];
         if (token == null) return new Unauthorized("Token not found");
 
-        let user: User = await new Promise(async (resolve, reject) => {
+        const user: User = await new Promise(async (resolve, reject) => {
           jwt.verify(token, process.env.TOKEN_SECRET ?? "Secret", async (err: any, user: any) => {
             if (err) return reject(err.message);
-            user = await this.userService.findOne(user.sub, {relations: ["role"]});
+            user = await this.userService.findOne(user.sub, {relations: ["role", "avatar"]});
 
             return resolve(user);
           });

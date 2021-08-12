@@ -36,13 +36,12 @@ export class UserComand implements CommandProvider {
       {
         title: "Ініцілізаці root користувача",
         task: async () => {
-
-          let user = new User();
+          const user = new User();
           user.name = "admin";
           user.email = "admin@admin.ua";
           user.passwordHash = await Passwordhelper.createHash("admin1");
-          let role = await this.RRoles.findOne({key: "root"});
-          
+          const role = await this.RRoles.findOne({key: "root"});
+
           if (role) {
             user.role = role;
           }

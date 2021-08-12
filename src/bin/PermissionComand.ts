@@ -34,11 +34,11 @@ export class PermissionComand implements CommandProvider {
       {
         title: "Ініцілізаці пермішін",
         task: async () => {
-          let animePrms = AnimePermissions.get();
+          const animePrms = AnimePermissions.get();
 
           for (const index in animePrms) {
-            let prmAction = animePrms[index];
-            let prm = new Permission();
+            const prmAction = animePrms[index];
+            const prm = new Permission();
 
             if (!(await this.SPermission.findOne({key: prmAction.key}))) {
               prm.key = prmAction.key;

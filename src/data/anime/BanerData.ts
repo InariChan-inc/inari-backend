@@ -1,5 +1,5 @@
 import {Field, ID, ObjectType} from "type-graphql";
-import { ImageData } from "../file/ImageData";
+import {ImageData} from "../file/ImageData";
 
 @ObjectType()
 export class BanerData {

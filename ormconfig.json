@@ -6,7 +6,7 @@
     "username": "inari",
     "password": "inari",
     "database": "inari",
-    "synchronize": false,
+    "synchronize": true,
     "entities": [
        "src/entity/**/*.ts"
     ],

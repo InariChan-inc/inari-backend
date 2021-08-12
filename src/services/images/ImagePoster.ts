@@ -31,7 +31,7 @@ export class ImagePoster implements ImageInterface {
                   const imageInput = new ImageInput();
                   imageInput.name = upload.filename;
                   imageInput.path = this.pathOriginal + "/" + upload.filename;
-                  imageInput.pathReduced = this.pathReduced + "/" + upload.filename;
+                  imageInput.pathResized = this.pathReduced + "/" + upload.filename;
                   imageInput.type = ImageTypeEnum.BANER;
                   res(imageInput);
                 });

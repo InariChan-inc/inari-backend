@@ -1,5 +1,5 @@
-import { PlatformTest } from "@tsed/common";
-import { HelloCommand } from "./HelloCommand";
+import {PlatformTest} from "@tsed/common";
+import {HelloCommand} from "./HelloCommand";
 
 describe("HelloCommand", () => {
   beforeEach(PlatformTest.create);

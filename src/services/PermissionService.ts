@@ -1,7 +1,7 @@
-import { Inject, Service } from "@tsed/common";
-import { UseConnection } from "@tsed/typeorm";
-import { PermissionRepository } from "@root/repositories/PermissionRepository";
-import { Permission } from "@root/entity/User/Permission";
+import {Inject, Service} from "@tsed/common";
+import {UseConnection} from "@tsed/typeorm";
+import {PermissionRepository} from "@root/repositories/PermissionRepository";
+import {Permission} from "@root/entity/User/Permission";
 
 @Service()
 export class PermissionService {
@@ -14,6 +14,6 @@ export class PermissionService {
   }
 
   async findOne(params: any) {
-   return this.permissionRepository.findOne(params);
+    return this.permissionRepository.findOne(params);
   }
 }

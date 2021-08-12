@@ -17,10 +17,10 @@ export class ImageService {
   @UseConnection("default")
   private imageRepository: ImageRepository;
 
-  public async create(upload: Upload, type: string) {
-    let imageFile = ImageFactory.createImage(type);
-    let imageInput = await imageFile.saveFile(upload);
-    let image = await this.imageRepository.save(plainToClass(Images, imageInput));
+  public async create(upload: Upload, type: string, indeficator?: string) {
+    const imageFile = ImageFactory.createImage(type, indeficator);
+    const imageInput = await imageFile.saveFile(upload);
+    const image = await this.imageRepository.save(plainToClass(Images, imageInput));
 
     return plainToClass(ImageData, image);
   }

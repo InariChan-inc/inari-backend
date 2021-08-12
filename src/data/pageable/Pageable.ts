@@ -1,10 +1,5 @@
-import {
-  Default,
-  Description,
-  Integer,
-  Min,
-} from "@tsed/schema";
-import { Field, InputType, ObjectType } from "type-graphql";
+import {Default, Description, Integer, Min} from "@tsed/schema";
+import {Field, InputType, ObjectType} from "type-graphql";
 
 @InputType()
 export class Pageable {

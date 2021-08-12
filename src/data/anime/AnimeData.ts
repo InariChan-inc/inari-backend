@@ -1,7 +1,10 @@
-import { Anime, FormatAnimeEnum, SeasonAnimeEnum, StatusAnimeEnum } from "@root/entity/Anime/Anime";
-import { AnimeInput } from "@root/inputs/Anime/AnimeInput";
-import { Field, ID, ObjectType } from "type-graphql";
-import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import {Anime, FormatAnimeEnum, SeasonAnimeEnum, StatusAnimeEnum} from "@root/entity/Anime/Anime";
+import {plainToClass} from "class-transformer";
+import {Field, ID, ObjectType} from "type-graphql";
+import {
+  Column,
+} from "typeorm";
+import { ImageData } from "../file/ImageData";
 // import { Images } from "@root/Images";
 // import { Janre } from "@root/Janre/Janre";
 // import { Team } from "@root/Team/Team";
@@ -11,76 +14,76 @@ import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, Ma
 
 @ObjectType()
 export class AnimeData {
-    @Field(() => ID)
-    id: number
+  @Field(() => ID)
+  id: number;
 
-    @Field()
-    name: string
+  @Field()
+  name: string;
 
-    // @OneToOne(() => Images)
-    // @JoinColumn()
-    // poster: Images
+  @Field(() => ImageData)
+  poster: ImageData;
 
-    @Column("simple-json")
-    nameOther: { ua: string, en?: string, ru?: string, jp?: string };
+  @Column("simple-json")
+  nameOther: {ua: string; en?: string; ru?: string; jp?: string};
 
-    @Field()
-    description: string
-    
-    @Field()
-    currentCountEpisodes: number
+  @Field()
+  description: string;
 
-    @Field()
-    countEpisodes: number
+  @Field()
+  currentCountEpisodes: number;
 
-    // @OneToMany(() => Janre, janre => janre.animes)
-    // public janres: Janre[]
+  @Field()
+  countEpisodes: number;
 
-    // @OneToOne(() => User)
-    // @JoinColumn({ name: "user_created_id" })
-    // user: User
+  // @OneToMany(() => Janre, janre => janre.animes)
+  // public janres: Janre[]
 
-    // @OneToMany(() => AnimeToTeam, animeToTeam => animeToTeam.team)
-    // public animeToTeams!: AnimeToTeam[];
+  // @OneToOne(() => User)
+  // @JoinColumn({ name: "user_created_id" })
+  // user: User
 
-    @Field()
-    duration: number
+  // @OneToMany(() => AnimeToTeam, animeToTeam => animeToTeam.team)
+  // public animeToTeams!: AnimeToTeam[];
 
-    @Field(() => FormatAnimeEnum)
-    format: FormatAnimeEnum
+  @Field()
+  duration: number;
 
-    @Field(() => SeasonAnimeEnum)
-    season: SeasonAnimeEnum
+  @Field(() => FormatAnimeEnum)
+  format: FormatAnimeEnum;
 
-    @Field(() => StatusAnimeEnum)
-    status: StatusAnimeEnum
+  @Field(() => SeasonAnimeEnum)
+  season: SeasonAnimeEnum;
 
-    @Field(() => Date)
-    dateRelease: Date
+  @Field(() => StatusAnimeEnum)
+  status: StatusAnimeEnum;
 
-    @Field(() => Date, { nullable: true })
-    dateEnd?: Date
+  @Field(() => Date)
+  dateRelease: Date;
 
-    @Field(() => Date)
-    createdAt: Date
+  @Field(() => Date, {nullable: true})
+  dateEnd?: Date;
 
-    @Field(() => Date)
-    updateAt: Date
+  @Field(() => Date)
+  createdAt: Date;
 
-    static loadFromEntity(anime: Anime){
-        let animeData = new AnimeData();
-        animeData.id = anime.id;
-        animeData.description = anime.description;
-        animeData.name = anime.name_other.ua;
-        animeData.nameOther = anime.name_other;
-        animeData.currentCountEpisodes = anime.count_episodes;
-        animeData.countEpisodes = anime.count_episodes
-        animeData.duration = anime.duration
-        animeData.season = anime.season
-        animeData.status = anime.status
-        animeData.format = anime.format
-        animeData.dateRelease = anime.date_release
+  @Field(() => Date)
+  updateAt: Date;
 
-        return animeData;
-    }
+  static loadFromEntity(anime: Anime) {
+    const animeData = new AnimeData();
+    animeData.id = anime.id;
+    animeData.description = anime.description;
+    animeData.name = anime.name_other.ua;
+    animeData.nameOther = anime.name_other;
+    animeData.currentCountEpisodes = anime.count_episodes;
+    animeData.countEpisodes = anime.count_episodes;
+    animeData.duration = anime.duration;
+    animeData.season = anime.season;
+    animeData.status = anime.status;
+    animeData.format = anime.format;
+    animeData.dateRelease = anime.date_release;
+    animeData.poster = plainToClass(ImageData, anime.poster);
+
+    return animeData;
+  }
 }
