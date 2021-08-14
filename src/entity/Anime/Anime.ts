@@ -48,7 +48,7 @@ export class Anime {
 
   @Expose()
   @Column("simple-json")
-  name_other: {ua: string; en?: string; ru?: string; jp?: string};
+  nameOther: {ua: string; en?: string; ru?: string; jp?: string};
 
   @Expose()
   @Field()
@@ -58,12 +58,12 @@ export class Anime {
   @Expose()
   @Field()
   @Column()
-  current_count_episodes: number;
+  currentCountEpisodes: number;
 
   @Expose()
   @Field()
   @Column()
-  count_episodes: number;
+  countEpisodes: number;
 
   @Expose()
   @OneToMany(() => Genre, (genre) => genre.animes)
@@ -101,18 +101,18 @@ export class Anime {
   @Expose()
   @Field(() => Date)
   @Column()
-  date_release: Date;
+  dateRelease: Date;
 
   @Expose()
   @Field(() => Date, {nullable: true})
   @Column({nullable: true})
-  date_end?: Date;
+  dateEnd?: Date;
 
   @Expose()
   @CreateDateColumn()
-  created_at: Date;
+  createdAt: Date;
 
   @Expose()
   @UpdateDateColumn()
-  update_at: Date;
+  updateAt: Date;
 }

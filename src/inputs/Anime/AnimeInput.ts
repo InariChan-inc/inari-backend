@@ -1,7 +1,4 @@
 import {FormatAnimeEnum, SeasonAnimeEnum, StatusAnimeEnum} from "@root/entity/Anime/Anime";
-import {EmailUniqValidator} from "@root/validators/user/EmailUniqValidator";
-import {NameUniqValidator} from "@root/validators/user/NameUniqValidator";
-import {IsEmail, Validate} from "class-validator";
 import {InputType, Field, registerEnumType} from "type-graphql";
 import {AnimeNameInput} from "./AnimeNameInput";
 
@@ -27,33 +24,33 @@ registerEnumType(StatusAnimeEnum, {
 
 @InputType()
 export class AnimeInput {
-  @Field((type) => AnimeNameInput)
+  @Field(() => AnimeNameInput)
   name: AnimeNameInput;
 
   @Field()
   description: string;
 
   @Field()
-  current_count_episodes: number;
+  currentCountEpisodes: number;
 
   @Field()
-  count_episodes: number;
+  countEpisodes: number;
 
   @Field()
   duration: number;
 
-  @Field((type) => FormatAnimeEnum)
+  @Field(() => FormatAnimeEnum)
   format: FormatAnimeEnum;
 
-  @Field((type) => SeasonAnimeEnum)
+  @Field(() => SeasonAnimeEnum)
   season: SeasonAnimeEnum;
 
-  @Field((type) => StatusAnimeEnum)
+  @Field(() => StatusAnimeEnum)
   status: StatusAnimeEnum;
 
   @Field()
   imageId: number;
 
   @Field()
-  date_release: Date;
+  dateRelease: Date;
 }

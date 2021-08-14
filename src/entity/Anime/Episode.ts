@@ -1,6 +1,5 @@
 import {Field, ID, ObjectType} from "type-graphql";
 import {Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
-import {Anime} from "./Anime";
 import {AnimeToTeam} from "./AnimeToTeam";
 import {EpisodeToVideoPlayer} from "./EpisodeToVideoPlayer";
 

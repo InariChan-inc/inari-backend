@@ -1,5 +1,4 @@
 import {Inject, Service} from "@tsed/common";
-import {UseConnection} from "@tsed/typeorm";
 import {AnimeRepository} from "@root/repositories/AnimeRepository";
 import {Anime} from "@root/entity/Anime/Anime";
 import {AnimeData} from "@root/data/anime/AnimeData";
@@ -17,9 +16,9 @@ export class AnimeService {
   @Inject()
   imageRepository: ImageRepository;
 
-  async create(animeInput: AnimeInput) {
+  async create(animeInput: AnimeInput): Promise<Anime> {
     const image = await this.imageRepository.findOne({id: animeInput.imageId});
-    const anime = plainToClass(Anime, {...animeInput, name: animeInput.name.ua, name_other: animeInput.name, poster: image});
+    const anime = plainToClass(Anime, {...animeInput, name: animeInput.name.ua, nameOther: animeInput.name, poster: image});
 
     return this.animeRepository.save(anime);
   }
@@ -43,7 +42,7 @@ export class AnimeService {
 
     const animesData: AnimeData[] = [];
 
-    for (const [key, anime] of Object.entries(animes)) {
+    for (const anime of animes) {
       animesData.push(AnimeData.loadFromEntity(anime));
     }
 
@@ -53,7 +52,7 @@ export class AnimeService {
   async lastUpdatedAnime(): Promise<AnimeData[]> {
     const animes = await this.animeRepository.find({
       relations: ["poster"],
-      order: {update_at: "DESC"},
+      order: {updateAt: "DESC"},
       take: 10
     });
 
@@ -63,7 +62,7 @@ export class AnimeService {
   async lastAddedAnime(): Promise<AnimeData[]> {
     const animes = await this.animeRepository.find({
       relations: ["poster"],
-      order: {created_at: "DESC"},
+      order: {createdAt: "DESC"},
       take: 10
     });
 

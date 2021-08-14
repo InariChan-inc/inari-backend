@@ -14,31 +14,31 @@ export class AnimeResolve {
   @Inject(AnimeService)
   private animeService: AnimeService;
 
-  @Mutation((returns) => AnimeData)
-  createAnime(@Arg("data") animeInput: AnimeInput) {
+  @Mutation(() => AnimeData)
+  createAnime(@Arg("data") animeInput: AnimeInput): Promise<Anime> {
     return this.animeService.create(animeInput);
   }
 
-  @Query((returns) => AnimeData)
-  async viewAnime(@Arg("id") id: number) {
+  @Query(() => AnimeData)
+  async viewAnime(@Arg("id") id: number): Promise<AnimeData> {
     const anime = await this.animeService.findById(id);
 
     return anime;
   }
 
-  @Query((returns) => AnimePagination)
+  @Query(() => AnimePagination)
   async animes(@Arg("data") pageable: Pageable): Promise<IPaginatedResponse> {
     const anime = await this.animeService.index(pageable);
 
     return anime;
   }
 
-  @Query((returns) => [AnimeData])
+  @Query(() => [AnimeData])
   async lastUpdatedAnime(): Promise<AnimeData[]> {
     return this.animeService.lastUpdatedAnime();
   }
 
-  @Query((returns) => [AnimeData])
+  @Query(() => [AnimeData])
   async lastAddedAnime(): Promise<AnimeData[]> {
     return this.animeService.lastAddedAnime();
   }

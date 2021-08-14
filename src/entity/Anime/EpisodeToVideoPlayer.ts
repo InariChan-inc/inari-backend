@@ -1,5 +1,5 @@
 import {ObjectType} from "type-graphql";
-import {Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
 import {VideoPlayer} from "../Player/VideoPlayer";
 import {Episode} from "./Episode";
 

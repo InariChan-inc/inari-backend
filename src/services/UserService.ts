@@ -1,4 +1,4 @@
-import {Inject, Injectable, Service} from "@tsed/common";
+import {Inject, Service} from "@tsed/common";
 import {UseConnection} from "@tsed/typeorm";
 import {User} from "@root/entity/User/User";
 import {UserInput} from "../inputs/User/UserInput";
@@ -51,7 +51,7 @@ export class UserService {
     const id = condition.id!;
     const user = await this.findById(id);
 
-    if (userInput.passwordOld && !await Passwordhelper.checkPassword(userInput.passwordOld, user.passwordHash)) {
+    if (userInput.passwordOld && !(await Passwordhelper.checkPassword(userInput.passwordOld, user.passwordHash))) {
       throw new ValidationError("Старий пароль не вірний");
     }
 

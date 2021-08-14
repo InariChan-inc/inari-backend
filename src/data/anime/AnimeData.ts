@@ -1,10 +1,8 @@
 import {Anime, FormatAnimeEnum, SeasonAnimeEnum, StatusAnimeEnum} from "@root/entity/Anime/Anime";
 import {plainToClass} from "class-transformer";
 import {Field, ID, ObjectType} from "type-graphql";
-import {
-  Column,
-} from "typeorm";
-import { ImageData } from "../file/ImageData";
+import {Column} from "typeorm";
+import {ImageData} from "../file/ImageData";
 // import { Images } from "@root/Images";
 // import { Janre } from "@root/Janre/Janre";
 // import { Team } from "@root/Team/Team";
@@ -69,19 +67,19 @@ export class AnimeData {
   @Field(() => Date)
   updateAt: Date;
 
-  static loadFromEntity(anime: Anime) {
+  static loadFromEntity(anime: Anime): AnimeData {
     const animeData = new AnimeData();
     animeData.id = anime.id;
     animeData.description = anime.description;
-    animeData.name = anime.name_other.ua;
-    animeData.nameOther = anime.name_other;
-    animeData.currentCountEpisodes = anime.count_episodes;
-    animeData.countEpisodes = anime.count_episodes;
+    animeData.name = anime.nameOther.ua;
+    animeData.nameOther = anime.nameOther;
+    animeData.currentCountEpisodes = anime.currentCountEpisodes;
+    animeData.countEpisodes = anime.countEpisodes;
     animeData.duration = anime.duration;
     animeData.season = anime.season;
     animeData.status = anime.status;
     animeData.format = anime.format;
-    animeData.dateRelease = anime.date_release;
+    animeData.dateRelease = anime.dateRelease;
     animeData.poster = plainToClass(ImageData, anime.poster);
 
     return animeData;
