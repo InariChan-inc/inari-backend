@@ -8,6 +8,8 @@ import {AnimePagination} from "@root/data/pageable/AnimePagination";
 import {AnimeInput} from "@root/inputs/Anime/AnimeInput";
 import {plainToClass} from "class-transformer";
 import {ImageRepository} from "@root/repositories/ImageRepository";
+import {AgendaService} from "@tsed/agenda";
+
 @Service()
 export class AnimeService {
   @Inject()
@@ -15,6 +17,9 @@ export class AnimeService {
 
   @Inject()
   imageRepository: ImageRepository;
+
+  @Inject()
+  private agenda: AgendaService;
 
   async create(animeInput: AnimeInput): Promise<Anime> {
     const image = await this.imageRepository.findOne({id: animeInput.imageId});
@@ -33,6 +38,12 @@ export class AnimeService {
     return AnimeData.loadFromEntity(anime);
   }
 
+  async view(id: number, ip: string): Promise<AnimeData> {
+    const animeData = await this.findById(id);
+    await this.agenda.now("view.addView", {animeId: id, ip});
+    return animeData;
+  }
+
   async index(pageable: Pageable): Promise<AnimePagination> {
     const animes = await this.animeRepository.find({
       relations: ["poster"],
@@ -49,23 +60,39 @@ export class AnimeService {
     return new AnimePagination({data: animesData, total: await this.animeRepository.count(), pageable});
   }
 
+  async topAnimeMonth(): Promise<AnimeData[]> {
+    const date = new Date();
+
+    const animes = await this.animeRepository
+      .createQueryBuilder("Anime")
+      .leftJoinAndSelect("Anime.viewMonth", "V_I", "V_I.animeId = Anime.id")
+      .where("V_I.dateMonth = :dateMonth", {
+        dateMonth: date.getFullYear() + "-" + date.getMonth()
+      })
+      .orderBy("views", "DESC")
+      .limit(12)
+      .getMany();
+
+    return animes.map((anime) => AnimeData.loadFromEntity(anime));
+  }
+
   async lastUpdatedAnime(): Promise<AnimeData[]> {
     const animes = await this.animeRepository.find({
       relations: ["poster"],
       order: {updateAt: "DESC"},
-      take: 10
+      take: 12
     });
 
-    return animes.map((anime) => plainToClass(AnimeData, anime));
+    return animes.map((anime) => AnimeData.loadFromEntity(anime));
   }
 
   async lastAddedAnime(): Promise<AnimeData[]> {
     const animes = await this.animeRepository.find({
       relations: ["poster"],
       order: {createdAt: "DESC"},
-      take: 10
+      take: 12
     });
 
-    return animes.map((anime) => plainToClass(AnimeData, anime));
+    return animes.map((anime) => AnimeData.loadFromEntity(anime));
   }
 }

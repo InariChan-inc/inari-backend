@@ -12,13 +12,13 @@ export class ImageValidate {
     this.imageSize = imageSize;
   }
 
-  async validate() {
+  async validate(): Promise<void> {
     if (!this.isImage()) {
       throw new ValidationError(`allow only image`);
     }
 
     if (!(await this.filesize())) {
-      throw new ValidationError(`maxFilesize: 1mbl`);
+      throw new ValidationError(`maxFilesize: 1mb`);
     }
 
     if (!(await this.validateSize())) {

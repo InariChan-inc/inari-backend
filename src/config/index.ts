@@ -26,6 +26,8 @@ if (process.env.NODE_ENV == "test") {
     port: 5435
   };
 }
+//${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOSTNAME}
+const mongoConnectionString = "mongodb://root:example@localhost:27017/agenda?authSource=admin";
 
 const {version} = require("../../package.json");
 export const rootDir = join(__dirname, "..");
@@ -69,6 +71,13 @@ export const config: Partial<TsED.Configuration> = {
         resolvers: [UserResolve, AnimeResolve, ImageResolve, BanerResolve, AvatarResolve],
         authChecker: customAuthChecker
       }
+    }
+  },
+  agenda: {
+    enabled: true, // Enable Agenda jobs for this instance.
+    // pass any options that you would normally pass to new Agenda(), e.g.
+    db: {
+      address: mongoConnectionString
     }
   }
   // additional shared configuration

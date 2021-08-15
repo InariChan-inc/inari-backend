@@ -33,6 +33,9 @@ export class AnimeData {
   @Field()
   countEpisodes: number;
 
+  @Field({nullable: true})
+  monthViews: number;
+
   // @OneToMany(() => Janre, janre => janre.animes)
   // public janres: Janre[]
 
@@ -68,20 +71,6 @@ export class AnimeData {
   updateAt: Date;
 
   static loadFromEntity(anime: Anime): AnimeData {
-    const animeData = new AnimeData();
-    animeData.id = anime.id;
-    animeData.description = anime.description;
-    animeData.name = anime.nameOther.ua;
-    animeData.nameOther = anime.nameOther;
-    animeData.currentCountEpisodes = anime.currentCountEpisodes;
-    animeData.countEpisodes = anime.countEpisodes;
-    animeData.duration = anime.duration;
-    animeData.season = anime.season;
-    animeData.status = anime.status;
-    animeData.format = anime.format;
-    animeData.dateRelease = anime.dateRelease;
-    animeData.poster = plainToClass(ImageData, anime.poster);
-
-    return animeData;
+    return plainToClass(AnimeData, {...anime, monthViews: anime.viewMonth?.views});
   }
 }

@@ -1,4 +1,3 @@
-import {Field, ID} from "type-graphql";
 import {Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn} from "typeorm";
 import {Images} from "../Images";
 

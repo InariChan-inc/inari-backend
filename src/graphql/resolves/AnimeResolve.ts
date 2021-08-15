@@ -2,12 +2,13 @@ import {Inject} from "@tsed/di";
 import {ResolverService} from "@tsed/graphql";
 import {Anime} from "@root/entity/Anime/Anime";
 import {AnimeService} from "@root/services/AnimeService";
-import {Arg, Mutation, Query} from "type-graphql";
+import {Arg, Ctx, Mutation, Query} from "type-graphql";
 import {AnimeInput} from "@root/inputs/Anime/AnimeInput";
 import {AnimeData} from "@root/data/anime/AnimeData";
 import {Pageable} from "@root/data/pageable/Pageable";
 import {AnimePagination} from "@root/data/pageable/AnimePagination";
 import {IPaginatedResponse} from "@root/data/pageable/PaginatedResponse";
+import {TContext} from "../../interface/Context";
 
 @ResolverService(Anime)
 export class AnimeResolve {
@@ -20,8 +21,8 @@ export class AnimeResolve {
   }
 
   @Query(() => AnimeData)
-  async viewAnime(@Arg("id") id: number): Promise<AnimeData> {
-    const anime = await this.animeService.findById(id);
+  async viewAnime(@Arg("id") id: number, @Ctx() ctx: TContext): Promise<AnimeData> {
+    const anime = await this.animeService.view(id, ctx.req?.connection.remoteAddress);
 
     return anime;
   }
@@ -31,6 +32,11 @@ export class AnimeResolve {
     const anime = await this.animeService.index(pageable);
 
     return anime;
+  }
+
+  @Query(() => [AnimeData])
+  async topAnimeMonth(): Promise<AnimeData[]> {
+    return this.animeService.topAnimeMonth();
   }
 
   @Query(() => [AnimeData])

@@ -1,4 +1,4 @@
-import {Field, ID, ObjectType} from "type-graphql";
+import {ObjectType} from "type-graphql";
 import {Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 import {Figure} from "../Figure/Figure";
 import {Team} from "../Team/Team";

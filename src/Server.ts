@@ -22,6 +22,11 @@ import {graphqlUploadExpress} from "graphql-upload";
       }
     ]
   },
+  eventEmitter: {
+    enabled: true, // Enable events for this instance.
+    // pass any options that you would normally pass to new EventEmitter2(), e.g.
+    wildcard: true
+  },
   acceptMimes: ["application/json"],
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE

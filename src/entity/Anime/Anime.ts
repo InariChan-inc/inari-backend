@@ -1,10 +1,21 @@
 import {Field, ID, ObjectType} from "type-graphql";
-import {Column, CreateDateColumn, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn} from "typeorm";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn
+} from "typeorm";
 import {Images} from "../Images";
 import {Genre} from "../Genre/Genre";
 import {User} from "../User/User";
 import {AnimeToTeam} from "./AnimeToTeam";
 import {Expose} from "class-transformer";
+import {ViewsInformation} from "./ViewsInformation";
 
 export enum FormatAnimeEnum {
   TV,
@@ -111,6 +122,11 @@ export class Anime {
   @Expose()
   @CreateDateColumn()
   createdAt: Date;
+
+  @Expose()
+  @ManyToOne(() => ViewsInformation)
+  @JoinColumn([{name: "id", referencedColumnName: "animeId"}])
+  viewMonth: ViewsInformation;
 
   @Expose()
   @UpdateDateColumn()
