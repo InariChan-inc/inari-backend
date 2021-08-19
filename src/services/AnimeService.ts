@@ -65,6 +65,7 @@ export class AnimeService {
 
     const animes = await this.animeRepository
       .createQueryBuilder("Anime")
+      .leftJoinAndSelect("Anime.poster", "P", "P.id = Anime.posterId")
       .leftJoinAndSelect("Anime.viewMonth", "V_I", "V_I.animeId = Anime.id")
       .where("V_I.dateMonth = :dateMonth", {
         dateMonth: date.getFullYear() + "-" + date.getMonth()
