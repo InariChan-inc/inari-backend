@@ -29,6 +29,7 @@ export class UserData {
 
   tokenRefresh?: string;
   passwordHash: string;
+  @Field(() => Date)
   createdAt: Date;
 
   static loadFromEntity(user: User) {
