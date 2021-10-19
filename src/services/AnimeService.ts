@@ -9,6 +9,7 @@ import {AnimeInput} from "@root/inputs/Anime/AnimeInput";
 import {plainToClass} from "class-transformer";
 import {ImageRepository} from "@root/repositories/ImageRepository";
 import {AgendaService} from "@tsed/agenda";
+import {ViewsInformation} from "../entity/Anime/ViewsInformation";
 
 @Service()
 export class AnimeService {
@@ -66,7 +67,7 @@ export class AnimeService {
     const animes = await this.animeRepository
       .createQueryBuilder("Anime")
       .leftJoinAndSelect("Anime.poster", "P", "P.id = Anime.posterId")
-      .leftJoinAndSelect("Anime.viewMonth", "V_I", "V_I.animeId = Anime.id")
+      .leftJoinAndMapOne("Anime.viewMonth", ViewsInformation, "V_I", "V_I.animeId = Anime.id")
       .where("V_I.dateMonth = :dateMonth", {
         dateMonth: date.getFullYear() + "-" + date.getMonth()
       })

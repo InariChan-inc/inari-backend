@@ -15,7 +15,7 @@ if (process.env.NODE_ENV == "test") {
     username: "test",
     password: "test",
     database: "test",
-    port: 5436
+    port: 5446
   };
 } else {
   db = {
@@ -23,7 +23,7 @@ if (process.env.NODE_ENV == "test") {
     username: "inari",
     password: "inari",
     database: "inari",
-    port: 5435
+    port: 5445
   };
 }
 //${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOSTNAME}
@@ -44,7 +44,7 @@ export const config: Partial<TsED.Configuration> = {
       username: db.username,
       password: db.password,
       database: db.database,
-      synchronize: false,
+      synchronize: true,
       logging: false,
       entities: ["${rootDir}/entity/**/*.{js,ts}"],
       migrations: ["${rootDir}/migration/**/*.{js,ts}"],

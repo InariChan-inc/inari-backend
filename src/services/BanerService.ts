@@ -1,6 +1,4 @@
 import {BanerData} from "@root/data/anime/BanerData";
-import {Baner} from "@root/entity/Anime/Baner";
-import {Images} from "@root/entity/Images";
 import {BanerInput} from "@root/inputs/Anime/BanerInput";
 import {BanerRepository} from "@root/repositories/BanerRepository";
 import {ImageRepository} from "@root/repositories/ImageRepository";
@@ -18,12 +16,10 @@ export class BanerService {
 
   async create(BanerInput: BanerInput): Promise<BanerData> {
     const image = await this.RImage!.findOne(BanerInput.image_id);
-    const baner = new Baner();
-    baner.name = BanerInput.name;
-    baner.image = image as Images;
 
     return await this.RBaner.save({
       name: BanerInput.name,
+      link: BanerInput.link,
       image: image
     });
   }

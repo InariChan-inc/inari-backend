@@ -1,20 +1,17 @@
-// @tsed/cli do not edit
-import * as defaultConfig from "./default.config.json";
-
 let db: any;
 if (process.env.NODE_ENV == "test") {
   db = {
     username: "test",
     password: "test",
     database: "test",
-    port: 5433
+    port: 5446
   };
 } else {
   db = {
     username: "inari",
     password: "inari",
     database: "inari",
-    port: 5432
+    port: 5445
   };
 }
 

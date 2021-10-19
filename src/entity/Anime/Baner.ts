@@ -9,6 +9,9 @@ export class Baner {
   @Column()
   name: string;
 
+  @Column()
+  link: string;
+
   @OneToOne(() => Images)
   @JoinColumn()
   image: Images;

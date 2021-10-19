@@ -6,5 +6,8 @@ export class BanerInput {
   name: string;
 
   @Field()
+  link: string;
+
+  @Field()
   image_id: number;
 }

@@ -125,7 +125,7 @@ export class Anime {
 
   @Expose()
   @ManyToOne(() => ViewsInformation)
-  @JoinColumn([{name: "id", referencedColumnName: "animeId"}])
+  //@JoinColumn([{name: "id", referencedColumnName: "animeId"}])
   viewMonth: ViewsInformation;
 
   @Expose()

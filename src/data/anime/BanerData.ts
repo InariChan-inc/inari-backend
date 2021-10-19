@@ -9,6 +9,9 @@ export class BanerData {
   @Field()
   name: string;
 
+  @Field()
+  link: string;
+
   @Field(() => ImageData)
   image: ImageData;
 }
