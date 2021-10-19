@@ -29,6 +29,7 @@ export class UserData {
 
   tokenRefresh?: string;
   passwordHash: string;
+  createdAt: Date;
 
   static loadFromEntity(user: User) {
     const userData = new UserData();
@@ -39,6 +40,7 @@ export class UserData {
     userData.theme = user.theme;
     userData.tokenRefresh = user.tokenRefresh;
     userData.passwordHash = user.passwordHash;
+    userData.createdAt = user.createdAt;
 
     userData.roleData = user.role ? RoleData.loadFromEntity(user.role) : undefined;
     userData.avatar = user.avatar ? plainToClass(ImageData, user.avatar) : undefined;

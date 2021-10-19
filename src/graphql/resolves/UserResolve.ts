@@ -33,6 +33,14 @@ export class UserResolve {
   }
 
   @Authorized()
+  @Query(() => UserData)
+  async viewUser(@Arg("id") id: number, @Ctx() ctx: TContext): Promise<UserData> {
+    const user = await this.userService.findById(ctx.user!.id);
+
+    return user;
+  }
+
+  @Authorized()
   @Mutation((returns) => Boolean)
   async updateProfile(@Arg("data") data: UserUpdateInput, @Ctx() ctx: TContext) {
     if ((await this.userService.updateById({id: ctx.user!.id}, data)).affected) {

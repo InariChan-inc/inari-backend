@@ -1,4 +1,5 @@
-import {Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, Unique} from "typeorm";
+import { Expose } from "class-transformer";
+import {Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, Unique} from "typeorm";
 import {Images} from "../Images";
 import {Team} from "../Team/Team";
 import {Roles} from "./Roles";
@@ -43,4 +44,8 @@ export class User {
   @ManyToMany(() => Team)
   @JoinTable()
   teams: Team[];
+
+  @Expose()
+  @CreateDateColumn()
+  createdAt: Date;
 }
