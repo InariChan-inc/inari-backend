@@ -2,6 +2,7 @@ import {Anime, FormatAnimeEnum, SeasonAnimeEnum, StatusAnimeEnum} from "@root/en
 import {plainToClass} from "class-transformer";
 import {Field, ID, ObjectType} from "type-graphql";
 import {Column} from "typeorm";
+import {Genre} from "../../entity/Genre/Genre";
 import {ImageData} from "../file/ImageData";
 // import { Images } from "@root/Images";
 // import { Janre } from "@root/Janre/Janre";
@@ -28,6 +29,9 @@ export class AnimeData {
   description: string;
 
   @Field()
+  studio: string;
+
+  @Field()
   currentCountEpisodes: number;
 
   @Field()
@@ -35,16 +39,6 @@ export class AnimeData {
 
   @Field({nullable: true})
   monthViews: number;
-
-  // @OneToMany(() => Janre, janre => janre.animes)
-  // public janres: Janre[]
-
-  // @OneToOne(() => User)
-  // @JoinColumn({ name: "user_created_id" })
-  // user: User
-
-  // @OneToMany(() => AnimeToTeam, animeToTeam => animeToTeam.team)
-  // public animeToTeams!: AnimeToTeam[];
 
   @Field()
   duration: number;
@@ -57,6 +51,9 @@ export class AnimeData {
 
   @Field(() => StatusAnimeEnum)
   status: StatusAnimeEnum;
+
+  @Field(() => [Genre])
+  genres: Genre[];
 
   @Field(() => Date)
   dateRelease: Date;

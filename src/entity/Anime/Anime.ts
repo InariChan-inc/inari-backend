@@ -4,6 +4,8 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
   OneToMany,
   OneToOne,
@@ -69,6 +71,11 @@ export class Anime {
   @Expose()
   @Field()
   @Column()
+  studio: string;
+
+  @Expose()
+  @Field()
+  @Column()
   currentCountEpisodes: number;
 
   @Expose()
@@ -77,7 +84,8 @@ export class Anime {
   countEpisodes: number;
 
   @Expose()
-  @OneToMany(() => Genre, (genre) => genre.animes)
+  @ManyToMany(() => Genre, (genre) => genre.animes)
+  @JoinTable()
   public genres: Genre[];
 
   @Expose()

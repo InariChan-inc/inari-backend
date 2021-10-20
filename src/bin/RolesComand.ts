@@ -37,7 +37,7 @@ export class RolesComand implements CommandProvider {
     {
       name: "root",
       key: "root",
-      permissions: ["userCreate", "userUpdate", "userDelete", "createBaner", "updateBaner", "deleteBaner"]
+      permissions: ["userCreate", "userUpdate", "userDelete", "createBaner", "updateBaner", "deleteBaner", "createAnime"]
     }
   ];
 

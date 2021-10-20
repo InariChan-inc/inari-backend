@@ -1,6 +1,5 @@
 import {Field, ID, ObjectType} from "type-graphql";
-import {Column, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
-import {Anime} from "../Anime/Anime";
+import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
 
 @Entity()
 @ObjectType()
@@ -9,9 +8,7 @@ export class Genre {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Field()
   @Column()
   name: string;
-
-  @ManyToOne(() => Anime, (anime) => anime.genres)
-  animes: Anime;
 }

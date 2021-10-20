@@ -10,6 +10,7 @@ import {plainToClass} from "class-transformer";
 import {ImageRepository} from "@root/repositories/ImageRepository";
 import {AgendaService} from "@tsed/agenda";
 import {ViewsInformation} from "../entity/Anime/ViewsInformation";
+import {GenreService} from "./GenreService";
 
 @Service()
 export class AnimeService {
@@ -20,17 +21,23 @@ export class AnimeService {
   imageRepository: ImageRepository;
 
   @Inject()
+  genreService: GenreService;
+
+  @Inject()
   private agenda: AgendaService;
 
   async create(animeInput: AnimeInput): Promise<Anime> {
     const image = await this.imageRepository.findOne({id: animeInput.imageId});
+    const genres = await Promise.all(animeInput.genres.map(async (genre) => this.genreService.createIfNewElseReturn(genre)));
     const anime = plainToClass(Anime, {...animeInput, name: animeInput.name.ua, nameOther: animeInput.name, poster: image});
+
+    anime.genres = genres;
 
     return this.animeRepository.save(anime);
   }
 
   async findById(id: number): Promise<AnimeData> {
-    const anime = await this.animeRepository.findOne(id);
+    const anime = await this.animeRepository.findOne(id, {relations: ["genres"]});
 
     if (anime === undefined) {
       throw new NotFound("anime not found");
