@@ -24,6 +24,9 @@ export class User {
   @Column()
   email: string;
 
+  @Column()
+  hashColor: string;
+
   @Column({default: ThemeEnum.LIGHT_THEME})
   theme: ThemeEnum;
 

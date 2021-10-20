@@ -4,6 +4,7 @@ import {Passwordhelper} from "@root/helpers/PasswordHelper";
 import {Command, CommandProvider, Inject} from "@tsed/cli-core";
 import {plainObjectToClass} from "@tsed/json-mapper";
 import {UseConnection} from "@tsed/typeorm";
+import {getHSL} from "../helpers/ColorHelper";
 import {RolesRepository} from "../repositories/RolesRepository";
 import {UserRepository} from "../repositories/UserRepository";
 
@@ -39,6 +40,7 @@ export class UserComand implements CommandProvider {
           const user = new User();
           user.name = "admin";
           user.email = "admin@admin.ua";
+          user.hashColor = getHSL();
           user.passwordHash = await Passwordhelper.createHash("admin1");
           const role = await this.RRoles.findOne({key: "root"});
 

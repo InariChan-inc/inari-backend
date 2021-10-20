@@ -84,7 +84,7 @@ export class Anime {
   countEpisodes: number;
 
   @Expose()
-  @ManyToMany(() => Genre, (genre) => genre.animes)
+  @ManyToMany(() => Genre)
   @JoinTable()
   public genres: Genre[];
 

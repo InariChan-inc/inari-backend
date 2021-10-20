@@ -18,6 +18,9 @@ export class UserData {
   @Field(() => String)
   email: string;
 
+  @Field(() => String)
+  hashColor: string;
+
   @Field(() => ThemeEnum)
   theme: ThemeEnum;
 
@@ -37,6 +40,7 @@ export class UserData {
     userData.id = user.id;
     userData.name = user.name;
     userData.email = user.email;
+    userData.hashColor = user.hashColor;
     userData.aboutMe = user.aboutMe;
     userData.theme = user.theme;
     userData.tokenRefresh = user.tokenRefresh;

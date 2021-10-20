@@ -14,6 +14,7 @@ import {NotFound} from "@tsed/exceptions";
 import {plainToClass} from "class-transformer";
 import {UserUpdateInput} from "@root/inputs/User/UserUpdateInput";
 import {ValidationError} from "apollo-server-express";
+import { getHSL } from "../helpers/ColorHelper";
 @Service()
 export class UserService {
   @Inject()
@@ -70,6 +71,7 @@ export class UserService {
     user.email = userInput.email;
     user.name = userInput.name;
     user.name = userInput.name;
+    user.hashColor = getHSL();
     user.passwordHash = await Passwordhelper.createHash(userInput.password);
     return this.userRepository.save(user);
   }
