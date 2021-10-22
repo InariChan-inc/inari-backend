@@ -34,8 +34,8 @@ export class UserResolve {
 
   @Authorized()
   @Query(() => UserData)
-  async viewUser(@Arg("id") id: number, @Ctx() ctx: TContext): Promise<UserData> {
-    const user = await this.userService.findById(ctx.user!.id);
+  async viewUser(@Arg("name") name: number): Promise<UserData | undefined> {
+    const user = await this.userService.findOne({name: name});
 
     return user;
   }
