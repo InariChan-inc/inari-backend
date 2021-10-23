@@ -32,7 +32,6 @@ export class UserResolve {
     return user;
   }
 
-  @Authorized()
   @Query(() => UserData)
   async viewUser(@Arg("nickname") nickname: string): Promise<UserData | undefined> {
     const user = await this.userService.findOne({name: nickname});
