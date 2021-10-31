@@ -43,7 +43,7 @@ export class ImageSeed {
         createReadStream: () => fs.createReadStream(__dirname + elem.path)
       };
 
-      const imageData = await this.imageService.create(upload, "poster");
+      const imageData = await this.imageService.create(upload, "baner");
 
       this.data.push(imageData);
     });
