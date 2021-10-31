@@ -972,6 +972,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/async@^3.2.9":
+  "integrity" "sha512-5Jx7ifieGrZq5qtKfZfQ/7o43eC7rkAURHEZYa4DUwydToHLgMdIpMseNmYvf+BdgIDCARo+LxlBz9LDAXAwNg=="
+  "resolved" "https://registry.npmjs.org/@types/async/-/async-3.2.9.tgz"
+  "version" "3.2.9"
+
 "@types/babel__core@^7.0.0", "@types/babel__core@^7.1.14":
   "integrity" "sha512-bxlMKPDbY8x5h6HBwVzEOk2C8fb6SLfYQ5Jw3uBYuYF1lfWk/kbLd81la82vrIkBb0l+JdmrZaDikPrNxpS/Ew=="
   "resolved" "https://registry.npmjs.org/@types/babel__core/-/babel__core-7.1.15.tgz"
@@ -1959,15 +1964,15 @@
   dependencies:
     "lodash" "^4.17.14"
 
+"async@^3.2.0", "async@3.2.0":
+  "integrity" "sha512-TR2mEZFVOj2pLStYxLht7TyfuRzaydfpxr3k9RpHIzMgw7A64dzsdqCxH1WJyQdoe8T10nDXd9wnEigmiuHIZw=="
+  "resolved" "https://registry.npmjs.org/async/-/async-3.2.0.tgz"
+  "version" "3.2.0"
+
 "async@0.9.x":
   "integrity" "sha1-rqdNXmHB+JlhO/ZL2mbUx48v0X0="
   "resolved" "https://registry.npmjs.org/async/-/async-0.9.2.tgz"
   "version" "0.9.2"
-
-"async@3.2.0":
-  "integrity" "sha512-TR2mEZFVOj2pLStYxLht7TyfuRzaydfpxr3k9RpHIzMgw7A64dzsdqCxH1WJyQdoe8T10nDXd9wnEigmiuHIZw=="
-  "resolved" "https://registry.npmjs.org/async/-/async-3.2.0.tgz"
-  "version" "3.2.0"
 
 "asynckit@^0.4.0":
   "integrity" "sha1-x57Zf380y48robyXkLzDZkdLS3k="

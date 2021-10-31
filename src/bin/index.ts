@@ -6,9 +6,10 @@ import {PermissionComand} from "./PermissionComand";
 import {RolesComand} from "./RolesComand";
 import {UserComand} from "./UserCommand";
 import "reflect-metadata";
+import {SeedComand} from "./SeedCommand";
 
 CliCore.bootstrap({
   ...config,
   // add your custom commands here
-  commands: [PermissionComand, UserComand, RolesComand]
+  commands: [PermissionComand, UserComand, RolesComand, SeedComand]
 }).catch(console.error);

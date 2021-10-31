@@ -13,7 +13,7 @@ export class ImageService {
   @UseConnection("default")
   private imageRepository: ImageRepository;
 
-  public async create(upload: Upload, type: string, indeficator?: string) {
+  public async create(upload: Upload, type: string, indeficator?: string): Promise<ImageData> {
     const imageFile = ImageFactory.createImage(type, indeficator);
     const imageInput = await imageFile.saveFile(upload);
     const image = await this.imageRepository.save(plainToClass(Images, imageInput));
