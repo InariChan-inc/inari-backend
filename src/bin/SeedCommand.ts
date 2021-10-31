@@ -2,7 +2,7 @@ import {Command, CommandProvider, Tasks} from "@tsed/cli-core";
 import {BanerSeed} from "../seeds/BanerSeed";
 import {ImageSeed} from "../seeds/ImageSeed";
 import {ImageService} from "../services/ImageService";
-import {Inject, Injectable} from "@tsed/di";
+import {Inject} from "@tsed/di";
 import {BanerService} from "../services/BanerService";
 
 export interface SeedCommandContext {

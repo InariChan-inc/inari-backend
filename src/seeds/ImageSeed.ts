@@ -25,12 +25,12 @@ export class ImageSeed {
     {
       filename: "test2Baner.png",
       type: ImageTypeEnum.POSTER,
-      path: "/resource/baner_test-1.png"
+      path: "/resource/baner_test-2.png"
     },
     {
       filename: "test3Baner.png",
       type: ImageTypeEnum.POSTER,
-      path: "/resource/baner_test-1.png"
+      path: "/resource/baner_test-4.png"
     }
   ];
 
