@@ -24,7 +24,7 @@ export class BanerSeed {
 
   constructor(public banerService: BanerService) {}
 
-  async init(relationData: any = []) {
+  async init(relationData: any = []): Promise<void> {
     await async.eachOf(this.seedData, async (elem, index) => {
       await this.banerService.create({
         image_id: relationData[index].id,

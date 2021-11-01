@@ -4,6 +4,8 @@ import {ImageSeed} from "../seeds/ImageSeed";
 import {ImageService} from "../services/ImageService";
 import {Inject} from "@tsed/di";
 import {BanerService} from "../services/BanerService";
+import { TeamSeed } from "../seeds/TeamSeed";
+import { TeamService } from "../services/TeamService";
 
 export interface SeedCommandContext {
   action: "init";
@@ -27,6 +29,8 @@ export class SeedComand implements CommandProvider {
   imageService: ImageService;
   @Inject()
   banerService: BanerService;
+  @Inject()
+  teamService: TeamService;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async $exec(ctx: SeedCommandContext): Promise<Tasks> {
     return [
@@ -35,8 +39,10 @@ export class SeedComand implements CommandProvider {
         task: async () => {
           const imageSeed = new ImageSeed(this.imageService);
           const banerService = new BanerSeed(this.banerService);
-          await imageSeed.init();
-          await banerService.init(imageSeed.getData());
+          const teamSeed = new TeamSeed(this.teamService);
+          // await imageSeed.init();
+          // await banerService.init(imageSeed.getData());
+          await teamSeed.init();
           return true;
         }
       }

@@ -3,7 +3,8 @@ import {Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn
 import {AnimeToTeam} from "../Anime/AnimeToTeam";
 import {Team} from "../Team/Team";
 
-enum FigureEnum {
+export enum FigureEnum {
+  Soundman,
   Translators,
   Actors
 }
@@ -24,7 +25,7 @@ export class Figure {
   @Column({nullable: true})
   profileId: number;
 
-  @ManyToOne(() => AnimeToTeam, (anime) => anime.episodes)
+  @ManyToOne(() => AnimeToTeam, (anime) => anime.figures)
   animeToTeam: AnimeToTeam;
 
   @ManyToMany(() => Team)

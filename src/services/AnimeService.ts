@@ -11,6 +11,7 @@ import {ImageRepository} from "@root/repositories/ImageRepository";
 import {AgendaService} from "@tsed/agenda";
 import {ViewsInformation} from "../entity/Anime/ViewsInformation";
 import {GenreService} from "./GenreService";
+import {FigureService} from "./FigureService";
 
 @Service()
 export class AnimeService {
@@ -24,11 +25,17 @@ export class AnimeService {
   genreService: GenreService;
 
   @Inject()
+  figureService: FigureService;
+
+  @Inject()
   private agenda: AgendaService;
 
   async create(animeInput: AnimeInput): Promise<Anime> {
     const image = await this.imageRepository.findOne({id: animeInput.imageId});
     const genres = await Promise.all(animeInput.genres.map(async (genre) => this.genreService.createIfNewElseReturn(genre)));
+    await Promise.all(animeInput.figures.map(async (figure) => this.figureService.createIfNewElseReturn(figure)));
+    //_.unset(animeInput, "figures");
+
     const anime = plainToClass(Anime, {...animeInput, name: animeInput.name.ua, nameOther: animeInput.name, poster: image});
 
     anime.genres = genres;
@@ -37,7 +44,13 @@ export class AnimeService {
   }
 
   async findById(id: number): Promise<AnimeData> {
-    const anime = await this.animeRepository.findOne(id, {relations: ["genres"]});
+    const anime = await this.animeRepository
+      .createQueryBuilder("Anime")
+      .leftJoinAndSelect("Anime.genres", "genres")
+      .leftJoinAndSelect("Anime.poster", "P", "P.id = Anime.posterId")
+      .leftJoinAndMapOne("Anime.viewMonth", ViewsInformation, "V_I", "V_I.animeId = Anime.id")
+      .where("Anime.id = :id", {id})
+      .getOne();
 
     if (anime === undefined) {
       throw new NotFound("anime not found");

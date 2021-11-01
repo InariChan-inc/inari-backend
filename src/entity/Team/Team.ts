@@ -12,6 +12,9 @@ export class Team {
   @Column()
   name: string;
 
+  @Column()
+  indef: string;
+
   @OneToMany(() => AnimeToTeam, (animeToTeam) => animeToTeam.anime)
   public teamToAnimes!: AnimeToTeam[];
 }

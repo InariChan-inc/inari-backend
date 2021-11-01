@@ -1,8 +1,7 @@
 import {FormatAnimeEnum, SeasonAnimeEnum, StatusAnimeEnum} from "@root/entity/Anime/Anime";
 import {InputType, Field, registerEnumType} from "type-graphql";
-import { ManyToOne } from "typeorm";
-import { Genre } from "../../entity/Genre/Genre";
 import {AnimeNameInput} from "./AnimeNameInput";
+import {FigureInput} from "./FigureInput";
 
 registerEnumType(FormatAnimeEnum, {
   name: "FormatAnimeEnum",
@@ -55,6 +54,9 @@ export class AnimeInput {
 
   @Field(() => StatusAnimeEnum)
   status: StatusAnimeEnum;
+
+  @Field(() => [FigureInput])
+  figures: FigureInput[];
 
   @Field()
   imageId: number;
