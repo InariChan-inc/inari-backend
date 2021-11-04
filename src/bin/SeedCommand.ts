@@ -4,8 +4,8 @@ import {ImageSeed} from "../seeds/ImageSeed";
 import {ImageService} from "../services/ImageService";
 import {Inject} from "@tsed/di";
 import {BanerService} from "../services/BanerService";
-import { TeamSeed } from "../seeds/TeamSeed";
-import { TeamService } from "../services/TeamService";
+import {TeamSeed} from "../seeds/TeamSeed";
+import {TeamService} from "../services/TeamService";
 
 export interface SeedCommandContext {
   action: "init";
