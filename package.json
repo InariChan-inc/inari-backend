@@ -1,7 +1,4 @@
 {
-  "_moduleAliases": {
-    "@root": "dist"
-  },
   "name": "inari",
   "version": "1.0.0",
   "description": "",
@@ -20,19 +17,19 @@
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/.bin/typeorm"
   },
   "dependencies": {
-    "@tsed/agenda": "^6.62.3",
-    "@tsed/ajv": "6.59.7",
+    "@tsed/agenda": "6.75.11",
+    "@tsed/ajv": "6.75.11",
     "@tsed/cli-core": "3.4.10",
-    "@tsed/common": "6.59.7",
-    "@tsed/core": "6.59.7",
-    "@tsed/di": "6.59.7",
-    "@tsed/event-emitter": "^6.62.3",
-    "@tsed/exceptions": "6.59.7",
-    "@tsed/graphql": "6.59.7",
-    "@tsed/json-mapper": "6.59.7",
-    "@tsed/platform-express": "6.59.7",
-    "@tsed/schema": "6.59.7",
-    "@tsed/typeorm": "6.59.7",
+    "@tsed/common": "6.75.11",
+    "@tsed/core": "6.75.11",
+    "@tsed/di": "6.75.11",
+    "@tsed/event-emitter": "6.75.11",
+    "@tsed/exceptions": "6.75.11",
+    "@tsed/graphql": "6.75.11",
+    "@tsed/json-mapper": "6.75.11",
+    "@tsed/platform-express": "6.75.11",
+    "@tsed/schema": "6.75.11",
+    "@tsed/typeorm": "6.75.11",
     "@types/async": "^3.2.9",
     "@types/gm": "^1.18.10",
     "agenda": "^4.2.1",
@@ -68,9 +65,9 @@
     "typeorm": "^0.2.34"
   },
   "devDependencies": {
-    "@tsed/cli-plugin-eslint": "3.4.10",
-    "@tsed/cli-plugin-jest": "3.4.10",
-    "@tsed/cli-plugin-typeorm": "3.4.10",
+    "@tsed/cli-plugin-eslint": "3.14.1",
+    "@tsed/cli-plugin-jest": "3.14.1",
+    "@tsed/cli-plugin-typeorm": "3.14.1",
     "@types/bcrypt": "^5.0.0",
     "@types/compression": "^1.7.1",
     "@types/cookie-parser": "^1.4.2",
@@ -102,9 +99,13 @@
     "tsconfig-paths": "^3.10.1",
     "typescript": "^4.3.5"
   },
+  "_moduleAliases": {
+    "@root": "dist"
+  },
   "tsed": {
     "packageManager": "yarn",
-    "convention": "default"
+    "convention": "default",
+    "architecture": "default"
   },
   "husky": {
     "hooks": {
