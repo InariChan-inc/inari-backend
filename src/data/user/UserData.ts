@@ -24,6 +24,9 @@ export class UserData {
   @Field(() => ThemeEnum)
   theme: ThemeEnum;
 
+  @Field(() => Boolean)
+  isSixteen: boolean;
+
   @Field(() => ImageData, {nullable: true})
   avatar?: ImageData;
 
@@ -43,6 +46,7 @@ export class UserData {
     userData.hashColor = user.hashColor;
     userData.aboutMe = user.aboutMe;
     userData.theme = user.theme;
+    userData.isSixteen = user.isSixteen;
     userData.tokenRefresh = user.tokenRefresh;
     userData.passwordHash = user.passwordHash;
     userData.createdAt = user.createdAt;
