@@ -26,8 +26,8 @@ export class UserUpdateInput {
   })
   passwordOld?: string;
 
-  @Field(() => Boolean)
-  isSixteen: boolean;
+  @Field(() => Boolean, {nullable: true})
+  isSixteen?: boolean;
 
   @Field(() => ThemeEnum, {nullable: true})
   theme?: ThemeEnum;
