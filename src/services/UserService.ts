@@ -22,7 +22,7 @@ export class UserService {
   userRepository: UserRepository;
 
   async validateUser(userLoginInput: UserLoginInput): Promise<User | null> {
-    const user = await this.userRepository.findOne({email: userLoginInput.email});
+    const user = await this.userRepository.findOne({email: userLoginInput.email}, {relations: ["role", "avatar"]});
     if (user && (await Passwordhelper.checkPassword(userLoginInput.password, user.passwordHash))) {
       return user;
     }
