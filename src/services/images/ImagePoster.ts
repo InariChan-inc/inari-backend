@@ -15,7 +15,7 @@ export class ImagePoster implements ImageInterface {
       throw new Error("error create mkdir");
     }
 
-    await new ImageValidate(upload, {filesize: 1024 * 1000, minHeight: 400, minWidth: 245}).validate();
+    await new ImageValidate(upload, {filesize: 1024 * 10000, minHeight: 400, minWidth: 245}).validate();
 
     return new Promise<ImageInput>(async (resolve, reject) => {
       const fullPath = __dirname + `/../../../` + this.pathOriginal + "/" + upload.filename;
