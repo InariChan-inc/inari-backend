@@ -67,7 +67,7 @@ export class AnimeService {
 
   async index(pageable: Pageable): Promise<AnimePagination> {
     const animes = await this.animeRepository.find({
-      relations: ["poster", "genre"],
+      relations: ["poster", "genres"],
       skip: pageable.page * pageable.size,
       take: pageable.size
     });
