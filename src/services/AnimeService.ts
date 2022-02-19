@@ -59,6 +59,18 @@ export class AnimeService {
     return AnimeData.loadFromEntity(anime);
   }
 
+  async findBySearch(search: string): Promise<AnimeData[]> {
+    const animes = await this.animeRepository
+      .createQueryBuilder("Anime")
+      .leftJoinAndSelect("Anime.poster", "P", "P.id = Anime.posterId")
+      .where("Anime.name like :name", {name: `%${search}%`})
+      .orderBy("views", "DESC")
+      .limit(12)
+      .getMany();
+
+    return animes.map((anime) => AnimeData.loadFromEntity(anime));
+  }
+
   async view(id: number, ip: string): Promise<AnimeData> {
     const animeData = await this.findById(id);
     await this.agenda.now("view.addView", {animeId: id, ip});

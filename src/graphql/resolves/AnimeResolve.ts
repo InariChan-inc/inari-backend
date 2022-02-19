@@ -41,6 +41,11 @@ export class AnimeResolve {
   }
 
   @Query(() => [AnimeData])
+  async animesSearch(@Arg("search") search: string): Promise<AnimeData[]> {
+    return this.animeService.findBySearch(search);
+  }
+
+  @Query(() => [AnimeData])
   async topAnimeMonth(): Promise<AnimeData[]> {
     return this.animeService.topAnimeMonth();
   }
