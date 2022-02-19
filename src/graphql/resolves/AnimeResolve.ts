@@ -2,15 +2,21 @@ import {Inject} from "@tsed/di";
 import {ResolverService} from "@tsed/graphql";
 import {Anime} from "@root/entity/Anime/Anime";
 import {AnimeService} from "@root/services/AnimeService";
-import {Arg, Authorized, Ctx, Mutation, Query} from "type-graphql";
+import {Arg, Authorized, Ctx, Mutation, Query, registerEnumType} from "type-graphql";
 import {AnimeInput} from "@root/inputs/Anime/AnimeInput";
 import {AnimeData} from "@root/data/anime/AnimeData";
-import {Pageable} from "@root/data/pageable/Pageable";
 import {AnimePagination} from "@root/data/pageable/AnimePagination";
 import {IPaginatedResponse} from "@root/data/pageable/PaginatedResponse";
 import {TContext} from "../../interface/Context";
 import {GenreRepository} from "../../repositories/GenreRepository";
 import {Genre} from "../../entity/Genre/Genre";
+import {AnimePegeable} from "../../data/anime/AnimePageable";
+import {AnimeFilterEnum} from "../../enum/anime/AnimeFIlterEnum";
+
+registerEnumType(AnimeFilterEnum, {
+  name: "AnimeFilterEnum",
+  description: "Вибреріть тип фільтра"
+});
 
 @ResolverService(Anime)
 export class AnimeResolve {
@@ -34,7 +40,7 @@ export class AnimeResolve {
   }
 
   @Query(() => AnimePagination)
-  async animes(@Arg("data") pageable: Pageable): Promise<IPaginatedResponse> {
+  async animes(@Arg("data") pageable: AnimePegeable): Promise<IPaginatedResponse> {
     const anime = await this.animeService.index(pageable);
 
     return anime;
