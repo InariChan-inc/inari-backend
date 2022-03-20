@@ -63,6 +63,7 @@ export class AnimeService {
     const animes = await this.animeRepository
       .createQueryBuilder("Anime")
       .leftJoinAndSelect("Anime.poster", "P", "P.id = Anime.posterId")
+      .leftJoinAndMapOne("Anime.viewMonth", ViewsInformation, "V_I", "V_I.animeId = Anime.id")
       .where("Anime.name like :name", {name: `%${search}%`})
       .orderBy("views", "DESC")
       .limit(12)
