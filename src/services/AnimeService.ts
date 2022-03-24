@@ -16,6 +16,8 @@ import {AnimeFilterEnum} from "../enum/anime/AnimeFIlterEnum";
 import {FilterAbstract} from "./animes/filter/FilterAbstract";
 import {GenreFilter} from "./animes/filter/GenreFilter";
 import {SeasonFilter} from "./animes/filter/SeasonFilter";
+import {SearchFilter} from "./animes/filter/SearchFilter";
+import {SelectQueryBuilder} from "typeorm";
 
 @Service()
 export class AnimeService {
@@ -90,7 +92,15 @@ export class AnimeService {
       .offset(pageable.page * pageable.size)
       .limit(pageable.size);
 
-    const animes = await this.filterObject(pageable.filter.type)?.filter(pageable.filter.params, animesQuery).getMany();
+    let i = 0;
+    for (const property in pageable.filters) {
+      if (pageable.filters[property]) {
+        this.filterObject(property.replace("Params", "").toUpperCase(), animesQuery, i)?.filter(pageable.filters[property]);
+        i++;
+      }
+    }
+
+    const animes = await animesQuery.getMany();
 
     if (!animes) {
       throw new NotFound("animes not found");
@@ -105,14 +115,23 @@ export class AnimeService {
     return new AnimePagination({data: animesData, total: await this.animeRepository.count(), pageable});
   }
 
-  filterObject(type: string): FilterAbstract | undefined {
+  filterObject(type: string, animesQuery: SelectQueryBuilder<Anime>, index: number): FilterAbstract | null {
+    let filter: FilterAbstract | null = null;
     if (AnimeFilterEnum.GENRE === type) {
-      return new GenreFilter();
+      filter = new GenreFilter();
     } else if (AnimeFilterEnum.SEASON === type) {
-      return new SeasonFilter();
+      filter = new SeasonFilter();
     } else if (AnimeFilterEnum.YEARS === type) {
-      return new SeasonFilter();
+      filter = new SeasonFilter();
+    } else if (AnimeFilterEnum.SEARCH === type) {
+      filter = new SearchFilter();
     }
+    if (filter) {
+      filter.setAnimeQuery(animesQuery);
+      filter.setIndex(index);
+    }
+
+    return filter;
   }
 
   async topAnimeMonth(): Promise<AnimeData[]> {

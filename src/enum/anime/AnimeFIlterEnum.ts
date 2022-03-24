@@ -4,5 +4,6 @@ export enum AnimeFilterEnum {
   TYPE_ANIME = "TYPE_ANIME",
   STATUS_ANIME = "STATUS_ANIME",
   SEASON = "SEASON",
-  YEARS = "YEARS"
+  YEARS = "YEARS",
+  SEARCH = "SEARCH"
 }

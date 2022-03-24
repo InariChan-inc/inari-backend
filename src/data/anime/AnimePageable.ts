@@ -5,5 +5,5 @@ import {AnimeFilterData} from "./filter/AnimeFilterData";
 @InputType()
 export class AnimePegeable extends Pageable {
   @Field(() => AnimeFilterData)
-  filter: AnimeFilterData;
+  filters: AnimeFilterData;
 }

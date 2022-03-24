@@ -1,10 +1,9 @@
 import {Field, InputType} from "type-graphql";
-import {AnimeFilterEnum} from "../../../enum/anime/AnimeFIlterEnum";
 @InputType()
 export class AnimeFilterData {
-  @Field(() => AnimeFilterEnum)
-  type: AnimeFilterEnum;
-
-  @Field(() => [String])
+  @Field(() => [String], {nullable: true})
   genreParams: string[];
+
+  @Field({nullable: true})
+  searchParams: string;
 }

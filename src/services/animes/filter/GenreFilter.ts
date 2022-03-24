@@ -3,7 +3,7 @@ import {Anime} from "../../../entity/Anime/Anime";
 import {FilterAbstract} from "./FilterAbstract";
 
 export class GenreFilter extends FilterAbstract {
-  filter(params: string[], animeQuery: SelectQueryBuilder<Anime>): SelectQueryBuilder<Anime> {
-    return animeQuery.where("genres.name IN(:...names)", {names: params});
+  filter(params: string[]): SelectQueryBuilder<Anime> {
+    return this.where("genres.name IN(:...names)", {names: params});
   }
 }
