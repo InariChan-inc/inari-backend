@@ -1,9 +1,9 @@
 import {SelectQueryBuilder} from "typeorm";
-import {Anime} from "../../../entity/Anime/Anime";
+import {Anime, SeasonAnimeEnum} from "../../../entity/Anime/Anime";
 import {FilterAbstract} from "./FilterAbstract";
 
 export class SeasonFilter extends FilterAbstract {
-  filter(params: string): SelectQueryBuilder<Anime> {
-    return animeQuery.where("Anime.name like :params", {params: `%${params}%`});
+  filter(params: SeasonAnimeEnum): SelectQueryBuilder<Anime> {
+    return this.where("Anime.season = :params", {params});
   }
 }

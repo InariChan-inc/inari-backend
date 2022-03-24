@@ -1,5 +1,5 @@
 import {ObjectLiteral, SelectQueryBuilder} from "typeorm";
-import {Anime} from "../../../entity/Anime/Anime";
+import {Anime, SeasonAnimeEnum} from "../../../entity/Anime/Anime";
 
 export abstract class FilterAbstract {
   private index: number;
@@ -13,7 +13,7 @@ export abstract class FilterAbstract {
     this.index = index;
   }
 
-  abstract filter(params: string[] | string): SelectQueryBuilder<Anime>;
+  abstract filter(params: string[] | string | SeasonAnimeEnum): SelectQueryBuilder<Anime>;
 
   where(where: string, parameters?: ObjectLiteral): SelectQueryBuilder<Anime> {
     if (this.index === 0) {
