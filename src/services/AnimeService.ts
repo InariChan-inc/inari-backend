@@ -3,7 +3,6 @@ import {AnimeRepository} from "@root/repositories/AnimeRepository";
 import {Anime} from "@root/entity/Anime/Anime";
 import {AnimeData} from "@root/data/anime/AnimeData";
 import {NotFound} from "@tsed/exceptions";
-import {Pageable} from "@root/data/pageable/Pageable";
 import {AnimePagination} from "@root/data/pageable/AnimePagination";
 import {AnimeInput} from "@root/inputs/Anime/AnimeInput";
 import {plainToClass} from "class-transformer";
@@ -12,6 +11,11 @@ import {AgendaService} from "@tsed/agenda";
 import {ViewsInformation} from "../entity/Anime/ViewsInformation";
 import {GenreService} from "./GenreService";
 import {FigureService} from "./FigureService";
+import {AnimePegeable} from "../data/anime/AnimePageable";
+import {AnimeFilterEnum} from "../enum/anime/AnimeFIlterEnum";
+import {FilterAbstract} from "./animes/filter/FilterAbstract";
+import {GenreFilter} from "./animes/filter/GenreFilter";
+import {SeasonFilter} from "./animes/filter/SeasonFilter";
 
 @Service()
 export class AnimeService {
@@ -78,12 +82,19 @@ export class AnimeService {
     return animeData;
   }
 
-  async index(pageable: Pageable): Promise<AnimePagination> {
-    const animes = await this.animeRepository.find({
-      relations: ["poster", "genres"],
-      skip: pageable.page * pageable.size,
-      take: pageable.size
-    });
+  async index(pageable: AnimePegeable): Promise<AnimePagination> {
+    const animesQuery = await this.animeRepository
+      .createQueryBuilder("anime")
+      .leftJoinAndSelect("anime.poster", "poster")
+      .leftJoinAndSelect("anime.genres", "genres")
+      .offset(pageable.page * pageable.size)
+      .limit(pageable.size);
+
+    const animes = await this.filterObject(pageable.filter.type)?.filter(pageable.filter.params, animesQuery).getMany();
+
+    if (!animes) {
+      throw new NotFound("animes not found");
+    }
 
     const animesData: AnimeData[] = [];
 
@@ -92,6 +103,16 @@ export class AnimeService {
     }
 
     return new AnimePagination({data: animesData, total: await this.animeRepository.count(), pageable});
+  }
+
+  filterObject(type: string): FilterAbstract | undefined {
+    if (AnimeFilterEnum.GENRE === type) {
+      return new GenreFilter();
+    } else if (AnimeFilterEnum.SEASON === type) {
+      return new SeasonFilter();
+    } else if (AnimeFilterEnum.YEARS === type) {
+      return new SeasonFilter();
+    }
   }
 
   async topAnimeMonth(): Promise<AnimeData[]> {

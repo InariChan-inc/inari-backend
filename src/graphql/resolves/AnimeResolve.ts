@@ -2,7 +2,7 @@ import {Inject} from "@tsed/di";
 import {ResolverService} from "@tsed/graphql";
 import {Anime} from "@root/entity/Anime/Anime";
 import {AnimeService} from "@root/services/AnimeService";
-import {Arg, Authorized, Ctx, Mutation, Query, registerEnumType} from "type-graphql";
+import {Arg, Authorized, createUnionType, Ctx, Mutation, Query, registerEnumType} from "type-graphql";
 import {AnimeInput} from "@root/inputs/Anime/AnimeInput";
 import {AnimeData} from "@root/data/anime/AnimeData";
 import {AnimePagination} from "@root/data/pageable/AnimePagination";

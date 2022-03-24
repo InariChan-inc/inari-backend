@@ -3,5 +3,6 @@ export enum AnimeFilterEnum {
   EXCLUDE_GENRE = "EXCLUDE_GENRE",
   TYPE_ANIME = "TYPE_ANIME",
   STATUS_ANIME = "STATUS_ANIME",
-  SEASON = "SEASON"
+  SEASON = "SEASON",
+  YEARS = "YEARS"
 }

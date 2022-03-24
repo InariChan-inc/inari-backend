@@ -1,5 +1,4 @@
-import {CollectionOf, Default, Generics, Integer, MinLength} from "@tsed/schema";
-import {Field, ObjectType} from "type-graphql";
+import {ObjectType} from "type-graphql";
 import {AnimeData} from "../anime/AnimeData";
 import {Pageable} from "./Pageable";
 import PaginatedResponse from "./PaginatedResponse";
