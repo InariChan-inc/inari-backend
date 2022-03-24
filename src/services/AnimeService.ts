@@ -70,7 +70,7 @@ export class AnimeService {
       .createQueryBuilder("Anime")
       .leftJoinAndSelect("Anime.poster", "P", "P.id = Anime.posterId")
       .leftJoinAndMapOne("Anime.viewMonth", ViewsInformation, "V_I", "V_I.animeId = Anime.id")
-      .where("Anime.name like :name", {name: `%${search}%`})
+      .where("LOWER(Anime.name) like LOWER(:name)", {name: `%${search}%`})
       .orderBy("views", "DESC")
       .limit(12)
       .getMany();
