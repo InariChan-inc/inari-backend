@@ -9,8 +9,7 @@ export enum AnimeFilterEnum {
 }
 
 export interface IAnimeFilterEnum {
-  genreParams: string;
-  excludeGenreParams: string;
+  genre: string;
   searchParams: string;
   typeParams: string;
   seasonParams: string;

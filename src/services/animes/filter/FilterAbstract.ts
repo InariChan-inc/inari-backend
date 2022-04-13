@@ -2,7 +2,7 @@ import {Brackets, ObjectLiteral, SelectQueryBuilder} from "typeorm";
 import {Anime, SeasonAnimeEnum} from "../../../entity/Anime/Anime";
 
 export abstract class FilterAbstract {
-  private index: number;
+  protected index: number;
   protected animeQuery: SelectQueryBuilder<Anime>;
 
   setAnimeQuery(animeQuery: SelectQueryBuilder<Anime>): void {
@@ -13,7 +13,7 @@ export abstract class FilterAbstract {
     this.index = index;
   }
 
-  abstract filter(params: string[] | string | SeasonAnimeEnum): SelectQueryBuilder<Anime>;
+  abstract filter(params: string[] | any | string | SeasonAnimeEnum): SelectQueryBuilder<Anime>;
 
   where(where: string | Brackets | any, parameters?: ObjectLiteral): SelectQueryBuilder<Anime> {
     if (this.index === 0) {

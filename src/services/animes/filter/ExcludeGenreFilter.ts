@@ -5,19 +5,21 @@ import {FilterAbstract} from "./FilterAbstract";
 
 export class ExludeGenreFilter extends FilterAbstract {
   filter(params: string[]): SelectQueryBuilder<Anime> {
-    return this.where(
+    console.log(this.index);
+    //this.animeQuery.leftJoin("anime.genres", "genres2");
+    return this.animeQuery.andWhere(
       (qb: SelectQueryBuilder<Genre>) => {
         const builder = qb
           .subQuery()
-          .select("COUNT(*)", "gcount")
-          .from(Genre, "genre2")
-          .leftJoin("genre2.animes", "animes2")
-          .where("genre2.name IN (:...names)", {names: params})
-          .andWhere("animes2.id = anime.id");
+          .select("anime.id")
+          .from(Genre, "genre3")
+          .leftJoin("genre3.animes", "animes3")
+          .where("genre3.name IN (:...names)", {names: params})
+          .andWhere("animes3.id = anime.id");
 
-        return `:gcount=all (${builder.getQuery()})`;
+        return `anime.id in (${builder.getQuery()})`;
       },
-      {gcount: 0}
+      {gcount: params.length}
     );
   }
 }

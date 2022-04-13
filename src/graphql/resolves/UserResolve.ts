@@ -25,7 +25,7 @@ export class UserResolve {
   // }
 
   @Authorized()
-  @Query((returns) => UserData)
+  @Query(() => UserData)
   async profile(@Ctx() ctx: TContext) {
     const user = await this.userService.findById(ctx.user!.id);
 
@@ -40,7 +40,7 @@ export class UserResolve {
   }
 
   @Authorized()
-  @Mutation((returns) => Boolean)
+  @Mutation(() => Boolean)
   async updateProfile(@Arg("data") data: UserUpdateInput, @Ctx() ctx: TContext) {
     if ((await this.userService.updateById({id: ctx.user!.id}, data)).affected) {
       return true;

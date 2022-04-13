@@ -1,12 +1,10 @@
 import {Field, InputType} from "type-graphql";
 import {FormatAnimeEnum, SeasonAnimeEnum} from "../../../entity/Anime/Anime";
+import {GenresFilterData} from "./GenresFilterData";
 @InputType()
 export class AnimeFilterData {
-  @Field(() => [String], {nullable: true})
-  genreParams: string[];
-
-  @Field(() => [String], {nullable: true})
-  excludeGenreParams: string[];
+  @Field(() => GenresFilterData, {nullable: true})
+  genre: GenresFilterData;
 
   @Field({nullable: true})
   searchParams: string;

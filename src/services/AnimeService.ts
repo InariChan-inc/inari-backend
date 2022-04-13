@@ -19,7 +19,7 @@ import {SeasonFilter} from "./animes/filter/SeasonFilter";
 import {SearchFilter} from "./animes/filter/SearchFilter";
 import {SelectQueryBuilder} from "typeorm";
 import {ExludeGenreFilter} from "./animes/filter/ExcludeGenreFilter";
-import { TypeFilter } from "./animes/filter/TypeFilter";
+import {TypeFilter} from "./animes/filter/TypeFilter";
 
 @Service()
 export class AnimeService {
