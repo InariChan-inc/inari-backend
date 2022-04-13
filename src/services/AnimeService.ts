@@ -18,7 +18,8 @@ import {GenreFilter} from "./animes/filter/GenreFilter";
 import {SeasonFilter} from "./animes/filter/SeasonFilter";
 import {SearchFilter} from "./animes/filter/SearchFilter";
 import {SelectQueryBuilder} from "typeorm";
-import { ExludeGenreFilter } from "./animes/filter/ExcludeGenreFilter";
+import {ExludeGenreFilter} from "./animes/filter/ExcludeGenreFilter";
+import { TypeFilter } from "./animes/filter/TypeFilter";
 
 @Service()
 export class AnimeService {
@@ -96,7 +97,7 @@ export class AnimeService {
 
     let i = 0;
     for (const property in pageable.filters) {
-      if (pageable.filters[property as keyof IAnimeFilterEnum]) {
+      if (pageable.filters && pageable.filters[property as keyof IAnimeFilterEnum]) {
         this.filterObject(property.replace("Params", "").toUpperCase(), animesQuery, i)?.filter(
           pageable.filters[property as keyof IAnimeFilterEnum]
         );
@@ -125,6 +126,8 @@ export class AnimeService {
       filter = new GenreFilter();
     } else if (AnimeFilterEnum.EXCLUDE_GENRE === type) {
       filter = new ExludeGenreFilter();
+    } else if (AnimeFilterEnum.TYPE_ANIME === type) {
+      filter = new TypeFilter();
     } else if (AnimeFilterEnum.SEASON === type) {
       filter = new SeasonFilter();
     } else if (AnimeFilterEnum.YEARS === type) {

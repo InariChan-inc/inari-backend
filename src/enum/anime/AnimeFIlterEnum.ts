@@ -1,7 +1,7 @@
 export enum AnimeFilterEnum {
   GENRE = "GENRE",
   EXCLUDE_GENRE = "EXCLUDEGENRE",
-  TYPE_ANIME = "TYPE_ANIME",
+  TYPE_ANIME = "TYPE",
   STATUS_ANIME = "STATUS_ANIME",
   SEASON = "SEASON",
   YEARS = "YEARS",
@@ -12,5 +12,6 @@ export interface IAnimeFilterEnum {
   genreParams: string;
   excludeGenreParams: string;
   searchParams: string;
+  typeParams: string;
   seasonParams: string;
 }

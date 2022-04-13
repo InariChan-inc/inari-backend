@@ -3,7 +3,7 @@ import {Anime} from "../../../entity/Anime/Anime";
 import {FilterAbstract} from "./FilterAbstract";
 
 export class TypeFilter extends FilterAbstract {
-  filter(params: string[], animeQuery: SelectQueryBuilder<Anime>): SelectQueryBuilder<Anime> {
-    return animeQuery.where("anime.season = :season", {season: params});
+  filter(params: string[]): SelectQueryBuilder<Anime> {
+    return this.where("anime.format = :format", {format: params});
   }
 }

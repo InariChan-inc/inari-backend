@@ -4,8 +4,8 @@ import {AnimeFilterData} from "./filter/AnimeFilterData";
 
 @InputType()
 export class AnimePegeable extends Pageable {
-  @Field(() => AnimeFilterData)
-  filters: AnimeFilterData;
+  @Field(() => AnimeFilterData, {nullable: true})
+  filters?: AnimeFilterData;
 
   @Field()
   sortName: "ASC" | "DESC" = "ASC";

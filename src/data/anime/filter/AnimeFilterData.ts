@@ -1,5 +1,5 @@
 import {Field, InputType} from "type-graphql";
-import {SeasonAnimeEnum} from "../../../entity/Anime/Anime";
+import {FormatAnimeEnum, SeasonAnimeEnum} from "../../../entity/Anime/Anime";
 @InputType()
 export class AnimeFilterData {
   @Field(() => [String], {nullable: true})
@@ -10,6 +10,9 @@ export class AnimeFilterData {
 
   @Field({nullable: true})
   searchParams: string;
+
+  @Field(() => FormatAnimeEnum, {nullable: true})
+  typeParams: FormatAnimeEnum;
 
   @Field(() => SeasonAnimeEnum, {nullable: true})
   seasonParams: SeasonAnimeEnum;
