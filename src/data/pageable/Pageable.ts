@@ -15,7 +15,7 @@ export class Pageable {
   @Default(5)
   @Description("Number of objects per page.")
   @Field()
-  size: number = 5;
+  size: number = 10;
 
   constructor(options: Partial<Pageable>) {
     options?.page && (this.page = options.page);

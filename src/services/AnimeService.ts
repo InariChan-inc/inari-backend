@@ -12,12 +12,13 @@ import {ViewsInformation} from "../entity/Anime/ViewsInformation";
 import {GenreService} from "./GenreService";
 import {FigureService} from "./FigureService";
 import {AnimePegeable} from "../data/anime/AnimePageable";
-import {AnimeFilterEnum} from "../enum/anime/AnimeFIlterEnum";
+import {AnimeFilterEnum, IAnimeFilterEnum} from "../enum/anime/AnimeFIlterEnum";
 import {FilterAbstract} from "./animes/filter/FilterAbstract";
 import {GenreFilter} from "./animes/filter/GenreFilter";
 import {SeasonFilter} from "./animes/filter/SeasonFilter";
 import {SearchFilter} from "./animes/filter/SearchFilter";
 import {SelectQueryBuilder} from "typeorm";
+import { ExludeGenreFilter } from "./animes/filter/ExcludeGenreFilter";
 
 @Service()
 export class AnimeService {
@@ -87,21 +88,24 @@ export class AnimeService {
   async index(pageable: AnimePegeable): Promise<AnimePagination> {
     const animesQuery = await this.animeRepository
       .createQueryBuilder("anime")
-      .leftJoinAndSelect("anime.poster", "poster")
-      .leftJoinAndSelect("anime.genres", "genres")
+      .innerJoinAndSelect("anime.poster", "poster")
+      .innerJoinAndSelect("anime.genres", "genres")
       .offset(pageable.page * pageable.size)
-      .limit(pageable.size);
+      .limit(pageable.size)
+      .orderBy("anime.name", pageable.sortName);
 
     let i = 0;
     for (const property in pageable.filters) {
-      if (pageable.filters[property]) {
-        this.filterObject(property.replace("Params", "").toUpperCase(), animesQuery, i)?.filter(pageable.filters[property]);
+      if (pageable.filters[property as keyof IAnimeFilterEnum]) {
+        this.filterObject(property.replace("Params", "").toUpperCase(), animesQuery, i)?.filter(
+          pageable.filters[property as keyof IAnimeFilterEnum]
+        );
         i++;
       }
     }
 
     const animes = await animesQuery.getMany();
-
+    console.log(animes);
     if (!animes) {
       throw new NotFound("animes not found");
     }
@@ -119,6 +123,8 @@ export class AnimeService {
     let filter: FilterAbstract | null = null;
     if (AnimeFilterEnum.GENRE === type) {
       filter = new GenreFilter();
+    } else if (AnimeFilterEnum.EXCLUDE_GENRE === type) {
+      filter = new ExludeGenreFilter();
     } else if (AnimeFilterEnum.SEASON === type) {
       filter = new SeasonFilter();
     } else if (AnimeFilterEnum.YEARS === type) {

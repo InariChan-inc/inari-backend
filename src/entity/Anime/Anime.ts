@@ -84,7 +84,7 @@ export class Anime {
   countEpisodes: number;
 
   @Expose()
-  @ManyToMany(() => Genre)
+  @ManyToMany(() => Genre, (genres) => genres.animes)
   @JoinTable()
   public genres: Genre[];
 
@@ -135,6 +135,10 @@ export class Anime {
   @ManyToOne(() => ViewsInformation)
   //@JoinColumn([{name: "id", referencedColumnName: "animeId"}])
   viewMonth: ViewsInformation;
+
+  @Expose()
+  @Column({select: false, nullable: true, insert: false, update: false})
+  public gcount: number;
 
   @Expose()
   @UpdateDateColumn()

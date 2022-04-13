@@ -67,6 +67,9 @@ export class AnimeData {
   @Field(() => Date)
   updateAt: Date;
 
+  @Field({nullable: true})
+  animegenrescount?: number;
+
   static loadFromEntity(anime: Anime): AnimeData {
     return plainToClass(AnimeData, {...anime, monthViews: anime.viewMonth?.views});
   }

@@ -5,6 +5,9 @@ export class AnimeFilterData {
   @Field(() => [String], {nullable: true})
   genreParams: string[];
 
+  @Field(() => [String], {nullable: true})
+  excludeGenreParams: string[];
+
   @Field({nullable: true})
   searchParams: string;
 
