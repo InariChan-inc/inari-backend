@@ -1,7 +1,7 @@
 import {Inject} from "@tsed/di";
 import {ResolverService} from "@tsed/graphql";
 import {UserService} from "../../services/UserService";
-import {Arg, Mutation, Query} from "type-graphql";
+import {Arg, Mutation} from "type-graphql";
 import {UserInput} from "../../inputs/User/UserInput";
 import {Images} from "../../entity/Images";
 

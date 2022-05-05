@@ -1,25 +1,25 @@
-import {Inject, Service} from "@tsed/common";
-import {AnimeRepository} from "@root/repositories/AnimeRepository";
-import {Anime} from "@root/entity/Anime/Anime";
 import {AnimeData} from "@root/data/anime/AnimeData";
-import {NotFound} from "@tsed/exceptions";
 import {AnimePagination} from "@root/data/pageable/AnimePagination";
+import {Anime} from "@root/entity/Anime/Anime";
 import {AnimeInput} from "@root/inputs/Anime/AnimeInput";
-import {plainToClass} from "class-transformer";
+import {AnimeRepository} from "@root/repositories/AnimeRepository";
 import {ImageRepository} from "@root/repositories/ImageRepository";
 import {AgendaService} from "@tsed/agenda";
-import {ViewsInformation} from "../entity/Anime/ViewsInformation";
-import {GenreService} from "./GenreService";
-import {FigureService} from "./FigureService";
+import {Inject, Service} from "@tsed/common";
+import {NotFound} from "@tsed/exceptions";
+import {plainToClass} from "class-transformer";
+import {SelectQueryBuilder} from "typeorm";
 import {AnimePegeable} from "../data/anime/AnimePageable";
+import {ViewsInformation} from "../entity/Anime/ViewsInformation";
 import {AnimeFilterEnum, IAnimeFilterEnum} from "../enum/anime/AnimeFIlterEnum";
+import {ExludeGenreFilter} from "./animes/filter/ExcludeGenreFilter";
 import {FilterAbstract} from "./animes/filter/FilterAbstract";
 import {GenreFilter} from "./animes/filter/GenreFilter";
-import {SeasonFilter} from "./animes/filter/SeasonFilter";
 import {SearchFilter} from "./animes/filter/SearchFilter";
-import {SelectQueryBuilder} from "typeorm";
-import {ExludeGenreFilter} from "./animes/filter/ExcludeGenreFilter";
+import {SeasonFilter} from "./animes/filter/SeasonFilter";
 import {TypeFilter} from "./animes/filter/TypeFilter";
+import {FigureService} from "./FigureService";
+import {GenreService} from "./GenreService";
 
 @Service()
 export class AnimeService {
@@ -135,6 +135,7 @@ export class AnimeService {
     } else if (AnimeFilterEnum.SEARCH === type) {
       filter = new SearchFilter();
     }
+
     if (filter) {
       filter.setAnimeQuery(animesQuery);
       filter.setIndex(index);

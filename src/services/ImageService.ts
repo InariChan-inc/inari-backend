@@ -4,7 +4,7 @@ import {ImageRepository} from "../repositories/ImageRepository";
 import {plainToClass} from "class-transformer";
 import {ImageData} from "../data/file/ImageData";
 import {Upload} from "@root/inputs/Image/Upload";
-import {ImageFactory} from "./images/ImageFactory";
+import {ImageFactory, IMapperImages} from "./images/ImageFactory";
 import {Images} from "../entity/Images";
 
 @Service()
@@ -13,7 +13,7 @@ export class ImageService {
   @UseConnection("default")
   private imageRepository: ImageRepository;
 
-  public async create(upload: Upload, type: string, indeficator?: string): Promise<ImageData> {
+  public async create(upload: Upload, type: IMapperImages, indeficator?: string): Promise<ImageData> {
     const imageFile = ImageFactory.createImage(type, indeficator);
     const imageInput = await imageFile.saveFile(upload);
     const image = await this.imageRepository.save(plainToClass(Images, imageInput));
